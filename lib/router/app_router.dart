@@ -18,6 +18,12 @@ static final GoRouter router = GoRouter(
       //   return const HomePage();
       // },
       routes: <RouteBase>[
+         GoRoute(
+          path: 'HomePage',
+          builder: (BuildContext context, GoRouterState state) {
+            return  HomePage(displayName: '',);
+          },
+        ),
         GoRoute(
           path: 'LatestMusic',
           builder: (BuildContext context, GoRouterState state) {

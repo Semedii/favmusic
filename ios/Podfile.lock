@@ -4,6 +4,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_config (0.0.1):
     - Flutter
+  - flutter_web_auth (0.5.0):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -14,6 +16,7 @@ DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - Flutter (from `Flutter`)
   - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
+  - flutter_web_auth (from `.symlinks/plugins/flutter_web_auth/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
@@ -24,6 +27,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_config:
     :path: ".symlinks/plugins/flutter_config/ios"
+  flutter_web_auth:
+    :path: ".symlinks/plugins/flutter_web_auth/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/ios"
   url_launcher_ios:
@@ -33,6 +38,7 @@ SPEC CHECKSUMS:
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_config: 2226c1df19c78fe34a05eb7f1363445f18e76fc1
+  flutter_web_auth: c25208760459cec375a3c39f6a8759165ca0fa4d
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 

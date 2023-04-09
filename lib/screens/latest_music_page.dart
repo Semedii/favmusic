@@ -12,7 +12,6 @@ class LatestMusicPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-SpotifyApi.getAccessToken();
     return Scaffold(
       appBar: AppBar(
         title: Text("Latest"),

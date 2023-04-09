@@ -1,11 +1,15 @@
-
 import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/my_button.dart';
 import 'package:favmusic/components/my_text_field.dart';
 import 'package:favmusic/cubits/login_cubits/login_cubit.dart';
+import 'package:favmusic/service/spotify_api.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+
+import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -16,40 +20,46 @@ class LoginPage extends StatelessWidget {
       create: (context) => _loginCubit,
       child: BlocBuilder<LoginCubit, LoginState>(
         builder: (context, state) {
-          if (state is LoginInitial){
-          return Scaffold(
-            body: SafeArea(
-              child: Column(
-                children: [
-                  SizedBox(height: 20.0),
-                  _getTitle(),
-                  _getLogo(),
-                  SizedBox(height: 20.0),
-                  _getEmailField(),
-                  SizedBox(height: 10.0),
-                  _getPassworfField(),
-                  SizedBox(height: 10.0),
-                  _getLoginButton(),
-                  SizedBox(height: 10.0),
-                  _getSpotifyButton(context),
-                  Spacer(),
-                  _getSignupButton()
-                ],
+          if (state is LoginInitial) {
+            return Scaffold(
+              body: SafeArea(
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.0),
+                    _getTitle(),
+                    _getLogo(),
+                    SizedBox(height: 20.0),
+                    _getEmailField(),
+                    SizedBox(height: 10.0),
+                    _getPassworfField(),
+                    SizedBox(height: 10.0),
+                    _getLoginButton(),
+                    SizedBox(height: 10.0),
+                    _getSpotifyButton(context),
+                    Spacer(),
+                    _getSignupButton()
+                  ],
+                ),
               ),
-            ),
-          );
-          } else {
-            return Center(
-      child: LoadinScreen()
-    );
+            );
+          } else if (state is LoginSuccess) {
+            SchedulerBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          HomePage(displayName: state.display_name)));
+            });
           }
+
+          return const Center(child: LoadinScreen());
         },
       ),
     );
   }
 
   _getTitle() {
-    return Text(
+    return const Text(
       "Welcome to FavMusic",
       style: TextStyle(
         fontSize: 24.0,
@@ -93,7 +103,7 @@ class LoginPage extends StatelessWidget {
       text: 'Login with Spotify',
       color: const Color.fromARGB(255, 49, 51, 50),
       onTap: () {
-        BlocProvider.of<LoginCubit>(context).launchSpotifyAuthUrl();
+        BlocProvider.of<LoginCubit>(context).authenticate();
       },
     );
   }

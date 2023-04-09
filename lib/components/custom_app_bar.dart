@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomAppBar({super.key});
-
+   CustomAppBar({
+    required this.DisplayName,
+    super.key});
+  final String DisplayName;
   @override
   Size get preferredSize => const Size(300, 150);
 
@@ -27,16 +29,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const SizedBox(width: 16),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
+          Column(mainAxisAlignment: MainAxisAlignment.center, children:  [
             Text(
-              "Good Morning",
+              _getGreeting(),
               style: TextStyle(color: Colors.white, fontSize: 28),
             ),
             SizedBox(
               height: 12,
             ),
             Text(
-              "Iqra",
+              "$DisplayName",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           ]),
@@ -44,4 +46,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       )),
     );
   }
+  String _getGreeting(){
+    print(DateTime.now().hour);
+    if(DateTime.now().hour>=1 && DateTime.now().hour<12){
+      return "Good Morning";
+    }
+    if(DateTime.now().hour>=12 && DateTime.now().hour<18){
+      return "Good Afternoon";
+    }
+    if(DateTime.now().hour>=18 && DateTime.now().hour<22){
+      return "Good Evening";
+    }
+    if(DateTime.now().hour>=22){
+      return "Good Night";
+    }
+    return "Hello";
+  }
+
 }

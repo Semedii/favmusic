@@ -6,3 +6,8 @@ abstract class LoginState {}
 class LoginInitial extends LoginState {}
 
 class LoginLoading extends LoginState {}
+
+class LoginSuccess extends LoginState {
+  String display_name;
+  LoginSuccess({required this.display_name});
+}
