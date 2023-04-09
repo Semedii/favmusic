@@ -23,9 +23,30 @@ class SpotifyApi {
 
     if (response.statusCode == 200) {
       final token = jsonDecode(response.body)['access_token'];
+      getSpotifyProfile(token);
       return token;
+
     } else {
       throw Exception('Failed to get access token');
     }
   }
+  static Future<void> getSpotifyProfile(String accessToken) async {
+  final profileUrl = Uri.parse('https://api.spotify.com/v1/me');
+  final response = await http.get(
+    profileUrl,
+    headers: {
+      'Authorization': 'Bearer $accessToken',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    final displayName = data['display_name'];
+    final email = data['email'];
+    final id = data['id'];
+    // Do something with the user profile data.
+  } else {
+    throw Exception('Failed to fetch Spotify profile');
+  }
+}
 }

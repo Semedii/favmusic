@@ -41,6 +41,11 @@ dependencies:
   audioplayers: ^3.0.1
   http: ^0.13.5
   flutter_config: ^2.0.0
+  bloc: ^8.1.1
+  flutter_bloc: ^8.1.2
+  url_launcher: ^6.1.10
+  loading_animation_widget:
+
 
 dev_dependencies:
   flutter_test:

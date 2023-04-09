@@ -1,5 +1,6 @@
 import 'package:favmusic/screens/home_page.dart';
 import 'package:favmusic/screens/latest_music_page.dart';
+import 'package:favmusic/screens/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,8 +11,12 @@ static final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
+        return  LoginPage();
       },
+      // path: '/',
+      // builder: (BuildContext context, GoRouterState state) {
+      //   return const HomePage();
+      // },
       routes: <RouteBase>[
         GoRoute(
           path: 'LatestMusic',
