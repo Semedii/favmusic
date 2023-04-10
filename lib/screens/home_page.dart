@@ -3,7 +3,6 @@ import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
 import 'package:favmusic/model/album.dart';
-import 'package:favmusic/service/spotify_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
