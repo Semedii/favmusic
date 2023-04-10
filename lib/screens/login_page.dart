@@ -65,7 +65,7 @@ class LoginPage extends StatelessWidget {
 
   _getLogo() {
     return Image.asset(
-      'assets/images/logo.png',
+      'assets/images/logo.jpeg',
     );
   }
 
