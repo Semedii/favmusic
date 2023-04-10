@@ -24,10 +24,13 @@ class MyPlayListPage extends StatelessWidget {
               body: ListView.builder(
                   itemCount: state.track.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return PlaylistTracks(
-                      artistName: state.track[index].artistName,
-                      name: state.track[index].name,
-                      imageUrl: state.track[index].imageUrl,
+                    return GestureDetector(
+                      onTap: _cubit.play,
+                      child: PlaylistTracks(
+                        artistName: state.track[index].artistName,
+                        name: state.track[index].name,
+                        imageUrl: state.track[index].imageUrl,
+                      ),
                     );
                   }),
             );

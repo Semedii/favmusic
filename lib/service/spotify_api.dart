@@ -78,8 +78,9 @@ class SpotifyApi {
     } else {
       throw Exception('Failed to fetch Spotify playlists');
     }
-  } 
-static getPlayListTracks() async {
+  }
+
+  static getPlayListTracks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
     final response = await http.get(
@@ -92,20 +93,39 @@ static getPlayListTracks() async {
       final List<dynamic> tracklistsJson = data['items'];
       final List<Track> track = tracklistsJson.map((tracklistsJson) {
         return Track(
-          name: tracklistsJson['track']['name'],
-          // imageUrl: tracklistsJson['track']['images'].isNotEmpty
-          //       ? tracklistsJson['images'][0]['url']
-          //       : null,
+            name: tracklistsJson['track']['name'],
+            // imageUrl: tracklistsJson['track']['images'].isNotEmpty
+            //       ? tracklistsJson['images'][0]['url']
+            //       : null,
+            trackuri: tracklistsJson['track']['uri'],
             artistName: tracklistsJson['track']['artists'][0]['name']);
-            //releaseDate: tracklistsJson['release_date'],
-            //trackCount: albumlistsJson['total_tracks']);
+        //releaseDate: tracklistsJson['release_date'],
+        //trackCount: albumlistsJson['total_tracks']);
       }).toList();
 
       return track;
-      
     } else {
       throw Exception('Failed to fetch Spotify playlists');
     }
   }
-  
+
+  void playTrack() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    final response = await http.put(
+        Uri.parse('https://api.spotify.com/v1/me/player/play'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type':
+              'application/json', //spotify:track:6D2Rq9dhteRpcMiiuGClPk
+        },
+        body:
+            '{"context_uri": "spotify:track:6D2Rq9dhteRpcMiiuGClPk","offset": { "position": 5},"position_ms": 0}');
+
+    if (response.statusCode == 204) {
+      print("playback started successfully");
+    } else {
+      print("handle error");
+    }
+  }
 }
