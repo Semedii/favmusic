@@ -2,14 +2,11 @@ import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/my_button.dart';
 import 'package:favmusic/components/my_text_field.dart';
 import 'package:favmusic/cubits/login_cubits/login_cubit.dart';
-import 'package:favmusic/service/spotify_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import 'home_page.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -44,11 +41,7 @@ class LoginPage extends StatelessWidget {
             );
           } else if (state is LoginSuccess) {
             SchedulerBinding.instance.addPostFrameCallback((_) {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          HomePage(displayName: state.display_name)));
+              GoRouter.of(context).pushReplacement("/HomePage");
             });
           }
 

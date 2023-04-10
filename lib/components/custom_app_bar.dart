@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-   CustomAppBar({
-    required this.DisplayName,
-    super.key});
-  final String DisplayName;
+  CustomAppBar({required this.displayName, super.key});
+  final String displayName;
   @override
-  Size get preferredSize => const Size(300, 150);
+  Size get preferredSize => const Size(300, 100);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: const Color.fromARGB(255, 63, 62, 62),
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           bottom: Radius.circular(20),
@@ -29,38 +27,38 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
           const SizedBox(width: 16),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children:  [
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
               _getGreeting(),
-              style: TextStyle(color: Colors.white, fontSize: 28),
+              style: const TextStyle(color: Colors.white, fontSize: 28),
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             Text(
-              "$DisplayName",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              displayName,
+              style: const TextStyle(color: Colors.white, fontSize: 20),
             ),
           ]),
         ],
       )),
     );
   }
-  String _getGreeting(){
+
+  String _getGreeting() {
     print(DateTime.now().hour);
-    if(DateTime.now().hour>=1 && DateTime.now().hour<12){
+    if (DateTime.now().hour >= 1 && DateTime.now().hour < 12) {
       return "Good Morning";
     }
-    if(DateTime.now().hour>=12 && DateTime.now().hour<18){
+    if (DateTime.now().hour >= 12 && DateTime.now().hour < 18) {
       return "Good Afternoon";
     }
-    if(DateTime.now().hour>=18 && DateTime.now().hour<22){
+    if (DateTime.now().hour >= 18 && DateTime.now().hour < 22) {
       return "Good Evening";
     }
-    if(DateTime.now().hour>=22){
+    if (DateTime.now().hour >= 22) {
       return "Good Night";
     }
     return "Hello";
   }
-
 }

@@ -1,65 +1,56 @@
+import 'package:favmusic/components/carousels/album_carousel.dart';
 import 'package:favmusic/components/loading_screen.dart';
-import 'package:favmusic/components/music_carousel.dart';
+import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
-import 'package:favmusic/data/favourite_music.list.dart';
-import 'package:favmusic/data/latest_music_list.dart';
-import 'package:favmusic/data/trending_music_list.dart';
+import 'package:favmusic/model/album.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../components/custom_app_bar.dart';
+import '../model/play_lists.dart';
 
 class HomePage extends StatelessWidget {
-   HomePage( {required this.displayName, super.key});
-  final String displayName;
-  final HomePageCubit _cubit = HomePageCubit();
+  HomePage({super.key});
+  final HomePageCubit _cubit = HomePageCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _cubit,
       child: BlocBuilder<HomePageCubit, HomePageState>(
         builder: (context, state) {
-          return Scaffold(
-            appBar: CustomAppBar(
-              DisplayName: displayName,
-            ),
-            body: Column(children: [
-              _getLatestMusic(context),
-              _getTrendingMusic(),
-              _getfavMusic()
-            ]),
+          if (state is HomePageIdle) {
+            return Scaffold(
+              backgroundColor: const Color.fromARGB(255, 50, 50, 50),
+              appBar: CustomAppBar(
+                displayName: state.displayName,
+              ),
+              body: Column(children: [
+                _getLatestRelease(state.latestReleases!),
+                const SizedBox(height: 10),
+                _getPlayLists(state.playlist!),
+              ]),
+            );
+          }
+          return const Center(
+            child: LoadinScreen(),
           );
         },
       ),
     );
   }
 
-  _getTrendingMusic() {
-    return MusicCarousel(
+  _getPlayLists(List<Playlist> playLists) {
+    return PlayListCarousel(
         seconds: 5,
-        items: TrendingMusicList.trendingMusicList,
-        title: "trending",
+        items: playLists,
+        title: "My PlayList",
         icon: Icons.trending_up_rounded);
   }
 
-  _getfavMusic() {
-    return MusicCarousel(
-        seconds: 4,
-        items: FavouriteMusicList.favouriteMusicList,
-        title: "favourite",
-        icon: Icons.favorite);
-  }
-
-  _getLatestMusic(BuildContext context) {
-    return GestureDetector(
-      onTap: () => GoRouter.of(context).push("/LatestMusic"),
-      child: MusicCarousel(
-        seconds: 3,
-        items: LatestMusicList.latestMusicList,
-        title: "latest",
-        icon: Icons.av_timer,
-      ),
-    );
+  _getLatestRelease(List<Album> albums) {
+    return AlbumCarousel(
+        items: albums,
+        title: "Latest Releases",
+        icon: Icons.trending_up_rounded);
   }
 }
