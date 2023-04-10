@@ -3,6 +3,7 @@ import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
 import 'package:favmusic/model/album.dart';
+import 'package:favmusic/screens/bottom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,6 +24,9 @@ class HomePage extends StatelessWidget {
               backgroundColor: const Color.fromARGB(255, 50, 50, 50),
               appBar: CustomAppBar(
                 displayName: state.displayName,
+              ),
+              bottomNavigationBar: MyBottomNavigationBar(
+
               ),
               body: Column(children: [
                 _getLatestRelease(state.latestReleases!),
