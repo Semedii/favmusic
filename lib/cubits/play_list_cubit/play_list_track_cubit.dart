@@ -13,4 +13,8 @@ class PlayListTrackCubit extends Cubit<PlayListTrackState> {
     List<Track> trackList = await SpotifyApi.getPlayListTracks();
     emit(PlayListTrackIdle(track: trackList));
   }
+
+  play(){
+  SpotifyApi().playTrack();
+  }
 }
