@@ -19,6 +19,7 @@ class LoginPage extends StatelessWidget {
         builder: (context, state) {
           if (state is LoginInitial) {
             return Scaffold(
+              backgroundColor: Colors.white,
               body: SafeArea(
                 child: Column(
                   children: [
