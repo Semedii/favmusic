@@ -31,7 +31,7 @@ class PlayListCarousel extends StatelessWidget {
             items: items.map((i) {
               return Builder(
                 builder: (BuildContext context) {
-                  return PlayListWidget(i.image, i.name);
+                  return PlayListWidget(imageurl: i.image, name: i.name, playListLink: i.link ,);
                 },
               );
             }).toList(),

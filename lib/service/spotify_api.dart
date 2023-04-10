@@ -6,7 +6,6 @@ import 'package:favmusic/model/track.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class SpotifyApi {
   static Future<Map<String, dynamic>> getSpotifyProfile(
       String? accessToken) async {
@@ -39,14 +38,13 @@ class SpotifyApi {
       final List<Playlist> playlists = playlistsJson.map((playlistJson) {
         return Playlist(
           name: playlistJson['name'],
-          link: playlistJson['external_urls']['spotify'],
+          link: playlistJson['id'],
           trackCount: playlistJson['tracks']['total'],
           image: playlistJson['images'].isNotEmpty
               ? playlistJson['images'][0]['url']
               : null,
         );
       }).toList();
-      //getPlayListTracks("4KjIhbJJgZ4rMWsLMm7LBX");
       return playlists;
     } else {
       throw Exception('Failed to fetch Spotify playlists');
@@ -81,14 +79,14 @@ class SpotifyApi {
     }
   }
 
-  static getPlayListTracks() async {
+  static getPlayListTracks(String link) async {
+    print(link);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
     final response = await http.get(
-      Uri.parse(
-          'https://api.spotify.com/v1/playlists/4KjIhbJJgZ4rMWsLMm7LBX/tracks'),
+      Uri.parse('https://api.spotify.com/v1/playlists/$link/tracks'),
       headers: {'Authorization': 'Bearer $accessToken'},
-    );
+    ); //4KjIhbJJgZ4rMWsLMm7LBX
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final List<dynamic> tracklistsJson = data['items'];
@@ -98,7 +96,6 @@ class SpotifyApi {
             trackuri: tracklistsJson['track']['uri'],
             artistName: tracklistsJson['track']['artists'][0]['name']);
       }).toList();
-
       return track;
     } else {
       throw Exception('Failed to fetch Spotify playlists');
@@ -118,7 +115,26 @@ class SpotifyApi {
         },
         body: '{"uris": ["$uri"]}');
 
-    if (response.statusCode == 200) {
-    } else {}
+    print(response.statusCode);
+    // if (response.statusCode == 204) {
+    //   return true;
+    // }
+    // return false;
+  }
+
+  static PauseTrack() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    print("wee $accessToken");
+    final response = await http.put(
+        Uri.parse(
+            'https://api.spotify.com/v1/me/player/pause?device_id=8010840bc6512b268875c04b55fb465f2a5031db'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        });
+
+    // if (response.statusCode == 204) {
+    print(response.statusCode);
   }
 }

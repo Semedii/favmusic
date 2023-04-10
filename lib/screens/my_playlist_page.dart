@@ -3,7 +3,7 @@ import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/play_list_widget.dart';
 import 'package:favmusic/components/track_widget.dart';
 import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
-import 'package:favmusic/cubits/play_list_cubit/play_list_track_cubit.dart';
+import 'package:favmusic/cubits/play_list_cubit/tracks_cubit.dart';
 import 'package:favmusic/screens/home_page.dart';
 import 'package:favmusic/service/spotify_api.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +31,7 @@ class MyPlayListPage extends StatelessWidget {
                     (e) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Card(child: PlayListWidget(e.image, e.name)),
+                        child: Card(child: PlayListWidget(imageurl: e.image, name:e.name, playListLink: e.link)),
                       );
                     },
                   ).toList(),
