@@ -25,7 +25,7 @@ class MyPlayListPage extends StatelessWidget {
                   itemCount: state.track.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GestureDetector(
-                      onTap: _cubit.play,
+                      onTap: ()=>_cubit.play(state.track[index].trackuri),
                       child: PlaylistTracks(
                         artistName: state.track[index].artistName,
                         name: state.track[index].name,

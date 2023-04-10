@@ -14,7 +14,7 @@ class LoginCubit extends Cubit<LoginState> {
     final redirectUri = 'waryaa:/';
     final result = await FlutterWebAuth.authenticate(
         url:
-            "https://accounts.spotify.com/authorize?client_id=$clientId&redirect_uri=$redirectUri&scope=user-read-currently-playing&response_type=token&state=123",
+            "https://accounts.spotify.com/authorize?client_id=$clientId&redirect_uri=$redirectUri&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&response_type=token&state=123",
         callbackUrlScheme: 'waryaa');
 
     final token = Uri.parse(result);

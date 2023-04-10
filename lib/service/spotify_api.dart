@@ -6,6 +6,7 @@ import 'package:favmusic/model/track.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class SpotifyApi {
   static Future<Map<String, dynamic>> getSpotifyProfile(
       String? accessToken) async {
@@ -94,13 +95,8 @@ class SpotifyApi {
       final List<Track> track = tracklistsJson.map((tracklistsJson) {
         return Track(
             name: tracklistsJson['track']['name'],
-            // imageUrl: tracklistsJson['track']['images'].isNotEmpty
-            //       ? tracklistsJson['images'][0]['url']
-            //       : null,
             trackuri: tracklistsJson['track']['uri'],
             artistName: tracklistsJson['track']['artists'][0]['name']);
-        //releaseDate: tracklistsJson['release_date'],
-        //trackCount: albumlistsJson['total_tracks']);
       }).toList();
 
       return track;
@@ -109,23 +105,20 @@ class SpotifyApi {
     }
   }
 
-  void playTrack() async {
+  void playTrack(String uri) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
+    print("wee $accessToken");
     final response = await http.put(
-        Uri.parse('https://api.spotify.com/v1/me/player/play'),
+        Uri.parse(
+            'https://api.spotify.com/v1/me/player/play?device_id=8010840bc6512b268875c04b55fb465f2a5031db'),
         headers: {
           'Authorization': 'Bearer $accessToken',
-          'Content-Type':
-              'application/json', //spotify:track:6D2Rq9dhteRpcMiiuGClPk
+          'Content-Type': 'application/json',
         },
-        body:
-            '{"context_uri": "spotify:track:6D2Rq9dhteRpcMiiuGClPk","offset": { "position": 5},"position_ms": 0}');
+        body: '{"uris": ["$uri"]}');
 
-    if (response.statusCode == 204) {
-      print("playback started successfully");
-    } else {
-      print("handle error");
-    }
+    if (response.statusCode == 200) {
+    } else {}
   }
 }
