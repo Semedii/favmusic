@@ -8,6 +8,7 @@ class PlayListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+       height: 200.0,
       width: double.infinity,
       decoration: BoxDecoration(
           image: DecorationImage(
