@@ -3,6 +3,7 @@ import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
 import 'package:favmusic/model/album.dart';
+import 'package:favmusic/service/spotify_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -40,17 +41,23 @@ class HomePage extends StatelessWidget {
   }
 
   _getPlayLists(List<Playlist> playLists) {
-    return PlayListCarousel(
-        seconds: 5,
-        items: playLists,
-        title: "My PlayList",
-        icon: Icons.trending_up_rounded);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: PlayListCarousel(
+          seconds: 5,
+          items: playLists,
+          title: "My PlayList",
+          icon: Icons.trending_up_rounded),
+    );
   }
 
   _getLatestRelease(List<Album> albums) {
-    return AlbumCarousel(
-        items: albums,
-        title: "Latest Releases",
-        icon: Icons.trending_up_rounded);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AlbumCarousel(
+            items: albums,
+            title: "Latest Releases",
+            icon: Icons.trending_up_rounded),
+    );
   }
 }
