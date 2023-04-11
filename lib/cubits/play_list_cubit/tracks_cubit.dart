@@ -8,20 +8,20 @@ part 'tracks_state.dart';
 
 class TrackCubit extends Cubit<TrackState> {
   TrackCubit() : super(TrackInitial());
-  
+
   initializePage(String link) async {
     List<Track> trackList = await SpotifyApi.getPlayListTracks(link);
-    emit(TrackIdle(track: trackList, isPlaying: false));
+    emit(TrackIdle(track: trackList, isPlaying: false, selectedIndex: -1));
   }
 
-  play(String uri) async {
+  play(String uri, int index) async {
     TrackIdle lastState = state as TrackIdle;
     if (lastState.isPlaying) {
       SpotifyApi.PauseTrack();
-      emit(lastState.copyWith(isPlaying: false));
+      emit(lastState.copyWith(isPlaying: false, selectedIndex: -1));
     } else {
       SpotifyApi().playTrack(uri);
-      emit(lastState.copyWith(isPlaying: true));
+      emit(lastState.copyWith(isPlaying: true, selectedIndex: index));
     }
   }
 }
