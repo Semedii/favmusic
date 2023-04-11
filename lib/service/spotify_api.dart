@@ -108,7 +108,7 @@ class SpotifyApi {
     print("wee $accessToken");
     final response = await http.put(
         Uri.parse(
-            'https://api.spotify.com/v1/me/player/play?device_id=8010840bc6512b268875c04b55fb465f2a5031db'),
+            'https://api.spotify.com/v1/me/player/play'),
         headers: {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ class SpotifyApi {
     print("wee $accessToken");
     final response = await http.put(
         Uri.parse(
-            'https://api.spotify.com/v1/me/player/pause?device_id=8010840bc6512b268875c04b55fb465f2a5031db'),
+            'https://api.spotify.com/v1/me/player/pause'),
         headers: {
           'Authorization': 'Bearer $accessToken',
           'Content-Type': 'application/json',

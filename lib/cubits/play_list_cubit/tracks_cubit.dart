@@ -8,7 +8,7 @@ part 'tracks_state.dart';
 
 class TrackCubit extends Cubit<TrackState> {
   TrackCubit() : super(TrackInitial());
-
+  
   initializePage(String link) async {
     List<Track> trackList = await SpotifyApi.getPlayListTracks(link);
     emit(TrackIdle(track: trackList, isPlaying: false));
