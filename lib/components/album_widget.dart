@@ -22,10 +22,17 @@ class AlbumWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => TracksPage(link: albumLink, isalbum: true,imageUrl: imageurl, )));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TracksPage(
+                      link: albumLink,
+                      isalbum: true,
+                      imageUrl: imageurl,
+                    )));
       },
       child: SizedBox(
-        height: 420,
+        height: 320,
         width: double.infinity,
         child: Column(
           children: [
@@ -50,6 +57,8 @@ class AlbumWidget extends StatelessWidget {
                           fontWeight: FontWeight.w700, fontSize: 28),
                     ),
                     _getAlbumDetails('ARTIST:', artistName),
+                    _getAlbumDetails(
+                        'TOTAL # OF TRACKS:', trackCount.toString()),
                     _getAlbumDetails("RELEASED ON:", releaseDate),
                   ]),
             )

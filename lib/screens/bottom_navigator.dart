@@ -50,6 +50,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
       case 2: // Hot Releases
+      Navigator.push(context, MaterialPageRoute(builder: (context) => LatestReleasesPage()));
         // Navigate to Hot Releases page
        // Navigator.push(context, MaterialPageRoute(builder: (context) => LatestReleasesPage()));
         break;
