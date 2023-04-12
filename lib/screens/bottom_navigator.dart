@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'my_playlist_page.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
-  const MyBottomNavigationBar();
+  const MyBottomNavigationBar({super.key});
 
   @override
   State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
