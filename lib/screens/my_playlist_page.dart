@@ -17,30 +17,33 @@ class MyPlayListPage extends StatelessWidget {
   final HomePageCubit _cubit = HomePageCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _cubit,
-      child: BlocBuilder<HomePageCubit, HomePageState>(
-        builder: (context, state) {
+    return Scaffold(
+      appBar: CustomAppBar(displayName: "displayName"),
+      bottomNavigationBar: MyBottomNavigationBar(),
+      body: BlocProvider(
+        create: (context) => _cubit,
+        child: BlocBuilder<HomePageCubit, HomePageState>(
+            builder: (context, state) {
           if (state is HomePageIdle) {
-            return Scaffold(
-              appBar: CustomAppBar(displayName: state.displayName),
-              bottomNavigationBar: MyBottomNavigationBar(),
-              body: ListView(
-                children: [
-                  ...state.playlist!.map(
-                    (e) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(child: PlayListWidget(imageurl: e.image, name:e.name, playListLink: e.link)),
-                      );
-                    },
-                  ).toList(),
-                ],
-              ),
+            return ListView(
+              children: [
+                ...state.playlist!.map(
+                  (e) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Card(
+                          child: PlayListWidget(
+                              imageurl: e.image,
+                              name: e.name,
+                              playListLink: e.link)),
+                    );
+                  },
+                ).toList(),
+              ],
             );
           }
-          return LoadinScreen();
-        },
+          return const LoadinScreen();
+        }),
       ),
     );
   }

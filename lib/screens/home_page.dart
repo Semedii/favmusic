@@ -15,30 +15,27 @@ class HomePage extends StatelessWidget {
   final HomePageCubit _cubit = HomePageCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _cubit,
-      child: BlocBuilder<HomePageCubit, HomePageState>(
-        builder: (context, state) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 50, 50, 50),
+      appBar: CustomAppBar(
+        displayName: "displayName",
+      ),
+      bottomNavigationBar: MyBottomNavigationBar(),
+      body: BlocProvider(
+        create: (context) => _cubit,
+        child: BlocBuilder<HomePageCubit, HomePageState>(
+            builder: (context, state) {
           if (state is HomePageIdle) {
-            return Scaffold(
-              backgroundColor: const Color.fromARGB(255, 50, 50, 50),
-              appBar: CustomAppBar(
-                displayName: state.displayName,
-              ),
-              bottomNavigationBar: MyBottomNavigationBar(
-
-              ),
-              body: Column(children: [
-                _getLatestRelease(state.latestReleases!),
-                const SizedBox(height: 10),
-                _getPlayLists(state.playlist!),
-              ]),
-            );
+            return Column(children: [
+              _getLatestRelease(state.latestReleases!),
+              const SizedBox(height: 10),
+              _getPlayLists(state.playlist!),
+            ]);
           }
           return const Center(
             child: LoadinScreen(),
           );
-        },
+        }),
       ),
     );
   }
@@ -58,9 +55,9 @@ class HomePage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: AlbumCarousel(
-            items: albums,
-            title: "Latest Releases",
-            icon: Icons.trending_up_rounded),
+          items: albums,
+          title: "Latest Releases",
+          icon: Icons.trending_up_rounded),
     );
   }
 }

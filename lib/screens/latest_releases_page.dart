@@ -18,33 +18,36 @@ class LatestReleasesPage extends StatelessWidget {
   final HomePageCubit _cubit = HomePageCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _cubit,
-      child: BlocBuilder<HomePageCubit, HomePageState>(
-        builder: (context, state) {
-          if (state is HomePageIdle) {
-            return Scaffold(
-              appBar: CustomAppBar(displayName: state.displayName),
-              bottomNavigationBar: MyBottomNavigationBar(),
-              body: ListView(
-                children: [
-                  ...state.latestReleases!.map(
-                    (e) {
-                      return 
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child:
-                         Card(child: AlbumWidget(imageurl: e.imageUrl, albumName:e.albumName, albumLink: e.albumLink, artistName: e.artistName, releaseDate: e.releaseDate, trackCount: e.trackCount,)),
-                      );
-                    },
-                  ).toList(),
-                ],
-              ),
-            );
-          }
-          return LoadinScreen();
-        },
-      ),
-    );
+    return Scaffold(
+        appBar: CustomAppBar(displayName: "displayName"),
+        bottomNavigationBar: MyBottomNavigationBar(),
+        body: BlocProvider(
+            create: (context) => _cubit,
+            child: BlocBuilder<HomePageCubit, HomePageState>(
+                builder: (context, state) {
+              if (state is HomePageIdle) {
+                return ListView(
+                  children: [
+                    ...state.latestReleases!.map(
+                      (e) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                              child: AlbumWidget(
+                            imageurl: e.imageUrl,
+                            albumName: e.albumName,
+                            albumLink: e.albumLink,
+                            artistName: e.artistName,
+                            releaseDate: e.releaseDate,
+                            trackCount: e.trackCount,
+                          )),
+                        );
+                      },
+                    ).toList(),
+                  ],
+                );
+              }
+              return const LoadinScreen();
+            })));
   }
 }
