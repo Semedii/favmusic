@@ -9,6 +9,7 @@ This app is under construction, but currently you can log in with Spotify and vi
 
 ![Login Screen](assets/images/loginscreen.png)
 ![homepage Screen](assets/images/homepage.png)
+![video](assets/images/video.mp4)
 
 
 
