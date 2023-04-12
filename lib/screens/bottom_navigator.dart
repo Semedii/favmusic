@@ -11,19 +11,18 @@ class MyBottomNavigationBar extends StatefulWidget {
   State<MyBottomNavigationBar> createState() => _MyBottomNavigationBarState();
 }
 
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  int currentIndex = 1;
+int currentIndex = 1;
 
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: currentIndex,
-      onTap: (s){
-        ontap(s);
-      },
+      onTap: ontap,
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.grey[500],
       backgroundColor: const Color.fromARGB(255, 50, 50, 50),
+      selectedLabelStyle: TextStyle(color: Colors.white),
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.playlist_play),
@@ -43,20 +42,22 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   void ontap(int index) {
     switch (index) {
-      case 0: // My Playlists
-        Navigator.push(context, MaterialPageRoute(builder: (context) => MyPlayListPage()));
+      case 0:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => MyPlayListPage()));
         break;
-      case 1: // Home
-         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      case 1:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
         break;
-      case 2: // Hot Releases
-      Navigator.push(context, MaterialPageRoute(builder: (context) => LatestReleasesPage()));
-        // Navigate to Hot Releases page
-       // Navigator.push(context, MaterialPageRoute(builder: (context) => LatestReleasesPage()));
+      case 2:
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => LatestReleasesPage()));
         break;
     }
     setState(() {
       currentIndex = index;
+      print("hehehek$index, $currentIndex");
     });
   }
 }
