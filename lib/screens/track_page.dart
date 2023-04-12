@@ -24,7 +24,9 @@ class TracksPage extends StatelessWidget {
           }
           if (state is TrackIdle) {
             return Scaffold(
-                appBar: AppBar(),
+                appBar: AppBar(
+                  backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+                ),
                 body: TrackWidget(
                   imageUrl: imageUrl,
                   trackList: state.track,

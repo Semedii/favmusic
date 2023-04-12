@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           if (state is UserIdle) {
             return AppBar(
               backgroundColor: const Color.fromARGB(255, 30, 30, 30),
-              elevation: 0,
+              elevation: 10,
               flexibleSpace: Center(
                   child: Row(
                 children: [
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: CircleAvatar(
                       radius: 40,
-                      //backgroundImage: Image.asset("assets/images/lp_image.jpeg").image,
+                      backgroundImage: state.imageUrl!.image
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             );
           }
           return Container(
-            color: const Color.fromARGB(255, 30, 30, 30),
+            color: const Color.fromARGB(255, 238, 233, 233),
           );
         },
       ),
