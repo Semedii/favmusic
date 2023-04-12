@@ -8,10 +8,10 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-part 'home_page_state.dart';
+part 'user_state.dart';
 
-class HomePageCubit extends Cubit<HomePageState> {
-  HomePageCubit() : super(HomePageInitial());
+class UserCubit extends Cubit<UserState> {
+  UserCubit() : super(UserInitial());
 
   initializePage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -21,7 +21,7 @@ class HomePageCubit extends Cubit<HomePageState> {
 
     List<Playlist> playLists = await _getPlaylists();
     List<Album> latestReleases = await _getLatestRelease();
-    emit(HomePageIdle(
+    emit(UserIdle(
         displayName: displayName,
         playlist: playLists,
         latestReleases: latestReleases));

@@ -1,18 +1,18 @@
 import 'package:favmusic/components/carousels/album_carousel.dart';
 import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/carousels/play_list_carousel.dart';
-import 'package:favmusic/cubits/home_page_cubit/home_page_cubit.dart';
 import 'package:favmusic/model/album.dart';
 import 'package:favmusic/screens/bottom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../components/custom_app_bar.dart';
+import '../cubits/user_cubit/user_cubit.dart';
 import '../model/play_lists.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final HomePageCubit _cubit = HomePageCubit()..initializePage();
+  final UserCubit _cubit = UserCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +23,9 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: MyBottomNavigationBar(),
       body: BlocProvider(
         create: (context) => _cubit,
-        child: BlocBuilder<HomePageCubit, HomePageState>(
+        child: BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {
-          if (state is HomePageIdle) {
+          if (state is UserIdle) {
             return Column(children: [
               _getLatestRelease(state.latestReleases!),
               const SizedBox(height: 10),

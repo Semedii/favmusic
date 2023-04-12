@@ -57,7 +57,6 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
     }
     setState(() {
       currentIndex = index;
-      print("hehehek$index, $currentIndex");
     });
   }
 }

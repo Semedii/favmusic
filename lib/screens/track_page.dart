@@ -6,7 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../components/track_widget.dart';
 
 class TracksPage extends StatelessWidget {
-  TracksPage({required this.link, required this.isalbum, this.imageUrl, super.key});
+  TracksPage(
+      {required this.link, required this.isalbum, this.imageUrl, super.key});
   final String link;
   final bool isalbum;
   final String? imageUrl;
@@ -18,7 +19,6 @@ class TracksPage extends StatelessWidget {
       create: (context) => _cubit,
       child: BlocBuilder<TrackCubit, TrackState>(
         builder: (context, state) {
-          print(state);
           if (state is TrackInitial) {
             BlocProvider.of<TrackCubit>(context).initializePage(link, isalbum);
           }
