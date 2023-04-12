@@ -9,7 +9,8 @@ This app is under construction, but currently you can log in with Spotify and vi
 
 ![Login Screen](assets/images/loginscreen.png)
 ![homepage Screen](assets/images/homepage.png)
-![video](https://drive.google.com/uc?id=12lLVDkqoPzYAaJ4y7qFbki2Kkf8mAos6&export=download)
+[![Alt text](https://drive.google.com/uc?id=VIDEO_ID)](https://drive.google.com/file/d/VIDEO_ID/preview)
+
 
 
 
