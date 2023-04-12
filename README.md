@@ -21,10 +21,7 @@ Tap on any track to play or pause the music.
 
 
 
-
-
-
-https://user-images.githubusercontent.com/94680835/231384440-4390d39f-c7a1-4eb4-a9d1-b128487e81ec.mp4
+https://user-images.githubusercontent.com/94680835/231577596-a0d3bddd-2b2d-461e-bef5-ffc04d332ad5.mp4
 
 
 
