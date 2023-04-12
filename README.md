@@ -7,10 +7,12 @@ A new Flutter project.
 This app is under construction, but currently you can log in with Spotify and view your saved playlists as well as the latest releases.
 
 
-![Login Screen](assets/images/loginscreen.png)
-![homepage Screen](assets/images/homepage.png)
-[![Alt text](https://drive.google.com/uc?id=12lLVDkqoPzYAaJ4y7qFbki2Kkf8mAos6)](https://drive.google.com/file/d/12lLVDkqoPzYAaJ4y7qFbki2Kkf8mAos6/preview)
 
+
+
+
+
+https://user-images.githubusercontent.com/94680835/231384440-4390d39f-c7a1-4eb4-a9d1-b128487e81ec.mp4
 
 
 
