@@ -18,7 +18,14 @@ class PlayListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => TracksPage(link: playListLink)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TracksPage(
+                      link: playListLink,
+                      isalbum: false,
+                      imageUrl: imageurl,
+                    )));
       },
       child: Container(
         height: 200.0,

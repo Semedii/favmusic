@@ -28,6 +28,7 @@ class AlbumCarousel extends StatelessWidget {
               return Builder(
                 builder: (BuildContext context) {
                   return AlbumWidget(
+                    albumLink: i.albumLink,
                     albumName: i.albumName,
                     artistName: i.artistName,
                     releaseDate: i.releaseDate,

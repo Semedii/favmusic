@@ -4,6 +4,7 @@ import '../model/track.dart';
 class TrackWidget extends StatelessWidget {
   const TrackWidget(
       {required this.trackList,
+      this.imageUrl,
       required this.selectedIndex,
       required this.onTap,
       Key? key})
@@ -11,6 +12,7 @@ class TrackWidget extends StatelessWidget {
 
   final List<Track> trackList;
   final int selectedIndex;
+  final String? imageUrl;
   final void Function(int index) onTap;
 
   @override
@@ -22,8 +24,8 @@ class TrackWidget extends StatelessWidget {
               title: Text(trackList[index].name),
               subtitle: Text(trackList[index].artistName),
               leading: Image(
-                image: trackList[index].imageUrl != null
-                    ? Image.network(trackList[index].imageUrl!).image
+                image: imageUrl != null
+                    ? Image.network(imageUrl!).image
                     : const AssetImage('assets/images/no_cover.jpeg'),
               ),
               trailing: selectedIndex == index

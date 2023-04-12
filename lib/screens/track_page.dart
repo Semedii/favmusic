@@ -6,9 +6,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../components/track_widget.dart';
 
 class TracksPage extends StatelessWidget {
-  TracksPage({required this.link, super.key});
+  TracksPage({required this.link, required this.isalbum, this.imageUrl, super.key});
   final String link;
-
+  final bool isalbum;
+  final String? imageUrl;
   final TrackCubit _cubit = TrackCubit();
 
   @override
@@ -19,12 +20,13 @@ class TracksPage extends StatelessWidget {
         builder: (context, state) {
           print(state);
           if (state is TrackInitial) {
-            BlocProvider.of<TrackCubit>(context).initializePage(link);
+            BlocProvider.of<TrackCubit>(context).initializePage(link, isalbum);
           }
           if (state is TrackIdle) {
             return Scaffold(
                 appBar: AppBar(),
                 body: TrackWidget(
+                  imageUrl: imageUrl,
                   trackList: state.track,
                   selectedIndex: state.selectedIndex,
                   onTap: (index) => BlocProvider.of<TrackCubit>(context)

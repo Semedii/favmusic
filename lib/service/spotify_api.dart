@@ -70,23 +70,44 @@ class SpotifyApi {
                 : null,
             artistName: albumlistsJson['artists'][0]['name'],
             releaseDate: albumlistsJson['release_date'],
-            trackCount: albumlistsJson['total_tracks']);
+            trackCount: albumlistsJson['total_tracks'],
+            albumLink: albumlistsJson['id']);
       }).toList();
-
       return album;
     } else {
       throw Exception('Failed to fetch Spotify playlists');
     }
   }
 
+  static getAlbumTracks(String link) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    final response = await http.get(
+      Uri.parse('https://api.spotify.com/v1/albums/$link/tracks'),
+      headers: {'Authorization': 'Bearer $accessToken'},
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final List<dynamic> tracklistsJson = data['items'];
+      final List<Track> track = tracklistsJson.map((tracklistsJson) {
+        return Track(
+            name: tracklistsJson['name'],
+            trackuri: tracklistsJson['uri'],
+            artistName: tracklistsJson['artists'][0]['name']);
+      }).toList();
+      return track;
+    } else {
+      throw Exception('Failed to fetch Spotify playlists');
+    }
+  }
+
   static getPlayListTracks(String link) async {
-    print(link);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
     final response = await http.get(
       Uri.parse('https://api.spotify.com/v1/playlists/$link/tracks'),
       headers: {'Authorization': 'Bearer $accessToken'},
-    ); //4KjIhbJJgZ4rMWsLMm7LBX
+    );
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
       final List<dynamic> tracklistsJson = data['items'];
@@ -105,36 +126,22 @@ class SpotifyApi {
   void playTrack(String uri) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
-    print("wee $accessToken");
-    final response = await http.put(
-        Uri.parse(
-            'https://api.spotify.com/v1/me/player/play'),
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-          'Content-Type': 'application/json',
-        },
-        body: '{"uris": ["$uri"]}');
-
-    print(response.statusCode);
-    // if (response.statusCode == 204) {
-    //   return true;
-    // }
-    // return false;
+    final response =
+        await http.put(Uri.parse('https://api.spotify.com/v1/me/player/play'),
+            headers: {
+              'Authorization': 'Bearer $accessToken',
+              'Content-Type': 'application/json',
+            },
+            body: '{"uris": ["$uri"]}');
   }
 
   static PauseTrack() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? accessToken = prefs.getString('accessToken');
-    print("wee $accessToken");
-    final response = await http.put(
-        Uri.parse(
-            'https://api.spotify.com/v1/me/player/pause'),
-        headers: {
-          'Authorization': 'Bearer $accessToken',
-          'Content-Type': 'application/json',
-        });
-
-    // if (response.statusCode == 204) {
-    print(response.statusCode);
+    final response = await http
+        .put(Uri.parse('https://api.spotify.com/v1/me/player/pause'), headers: {
+      'Authorization': 'Bearer $accessToken',
+      'Content-Type': 'application/json',
+    });
   }
 }
