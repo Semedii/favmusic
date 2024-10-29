@@ -7,10 +7,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
   final LoginCubit _loginCubit = LoginCubit();
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -20,23 +20,20 @@ class LoginPage extends StatelessWidget {
           if (state is LoginInitial) {
             return Scaffold(
               backgroundColor: Colors.white,
-              body: SafeArea(
-                child: Column(
-                  children: [
-                    SizedBox(height: 20.0),
-                    _getTitle(),
-                    _getLogo(),
-                    SizedBox(height: 20.0),
-                    _getEmailField(),
-                    SizedBox(height: 10.0),
-                    _getPassworfField(),
-                    SizedBox(height: 10.0),
-                    _getLoginButton(),
-                    SizedBox(height: 10.0),
-                    _getSpotifyButton(context),
-                    Spacer(),
-                    _getSignupButton()
-                  ],
+              body: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 32.0),
+                      _getTitle(),
+                      _getLogo(),
+                      SizedBox(height: 10.0),
+                      _getSpotifyButton(context),
+                      Spacer(),
+                      _getSignupButton()
+                    ],
+                  ),
                 ),
               ),
             );
@@ -52,7 +49,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _getTitle() {
+  Widget _getTitle() {
     return const Text(
       "Welcome to FavMusic",
       style: TextStyle(
@@ -64,27 +61,27 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _getLogo() {
+  Widget _getLogo() {
     return Image.asset(
       'assets/images/logo.jpeg',
     );
   }
 
-  _getEmailField() {
+  Widget _getEmailField() {
     return const MyTextField(
       labelText: "Email",
       prefixIconData: Icons.email,
     );
   }
 
-  _getPassworfField() {
+  Widget _getPassworfField() {
     return const MyTextField(
       labelText: "Password",
       prefixIconData: Icons.lock,
     );
   }
 
-  _getLoginButton() {
+  Widget _getLoginButton() {
     return MyButton(
         onTap: () {
           throw UnimplementedError();
@@ -92,7 +89,7 @@ class LoginPage extends StatelessWidget {
         text: "Log In");
   }
 
-  _getSpotifyButton(BuildContext context) {
+  Widget _getSpotifyButton(BuildContext context) {
     return MyButton(
       text: 'Login with Spotify',
       color: const Color.fromARGB(255, 49, 51, 50),
@@ -102,7 +99,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  _getSignupButton() {
+  Widget _getSignupButton() {
     return TextButton(
       onPressed: () {
         throw UnimplementedError();

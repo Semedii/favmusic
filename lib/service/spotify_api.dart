@@ -21,6 +21,7 @@ class SpotifyApi {
       final data = jsonDecode(response.body);
       return data;
     } else {
+      print("2222 ${response.body} ${accessToken}");
       throw Exception('Failed to fetch Spotify profile');
     }
   }
