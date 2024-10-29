@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
       return _buildLoginContent(context);
     } else if (state is LoginSuccess) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-        GoRouter.of(context).pushReplacement("/HomePage");
+        GoRouter.of(context).pushReplacement("/MainPage");
       });
     }
 
