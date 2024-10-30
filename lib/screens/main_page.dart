@@ -1,4 +1,4 @@
-import 'package:favmusic/cubits/cubit/bottom_navigation_bar_cubit.dart';
+import 'package:favmusic/cubits/authentication/bottom_navigation_bar_cubit.dart';
 import 'package:favmusic/screens/home_page.dart';
 import 'package:favmusic/screens/latest_releases_page.dart';
 import 'package:favmusic/screens/my_playlist_page.dart';

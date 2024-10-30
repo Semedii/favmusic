@@ -1,5 +1,5 @@
+import 'package:favmusic/router/authentication_wrapper.dart';
 import 'package:favmusic/screens/home_page.dart';
-import 'package:favmusic/screens/login_page.dart';
 import 'package:favmusic/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +11,7 @@ static final GoRouter router = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return  LoginPage();
+        return  AuthenticationWrapper();
       },
       routes: <RouteBase>[
          GoRoute(
