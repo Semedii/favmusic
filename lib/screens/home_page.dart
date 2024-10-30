@@ -4,8 +4,6 @@ import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/model/album.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../components/custom_app_bar.dart';
 import '../cubits/user_cubit/user_cubit.dart';
 import '../model/play_lists.dart';
 
@@ -14,12 +12,11 @@ class HomePage extends StatelessWidget {
   final UserCubit _cubit = UserCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 50, 50, 50),
-      appBar: CustomAppBar(
-        displayName: "displayName",
-      ),
-      body: BlocProvider(
+    return 
+    // Scaffold(
+    //   backgroundColor: const Color.fromARGB(255, 50, 50, 50),
+    //   body:
+       BlocProvider(
         create: (context) => _cubit,
         child: BlocBuilder<UserCubit, UserState>(
             builder: (context, state) {
@@ -34,7 +31,7 @@ class HomePage extends StatelessWidget {
             child: LoadinScreen(),
           );
         }),
-      ),
+    //  ),
     );
   }
 

@@ -16,10 +16,42 @@ class MainPage extends StatelessWidget {
         builder: (context, state) {
           final index = (state as BottomNavigationBarInitial).index;
           return Scaffold(
+            backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+            appBar: AppBar(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _getCircularImage('logo.jpeg', 24),
+                  const SizedBox(width: 4),
+                  const Text(
+                    "FavMusic",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
+              backgroundColor: Colors.transparent,
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: _getCircularImage('profile_pic.jpeg', 48),
+                ),
+              ],
+            ),
             bottomNavigationBar: _buildBottomNavigationBar(context, index),
             body: _getBody(index),
           );
         },
+      ),
+    );
+  }
+
+  ClipOval _getCircularImage(String imageName, double size) {
+    return ClipOval(
+      child: Image.asset(
+        'assets/images/$imageName',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
       ),
     );
   }
