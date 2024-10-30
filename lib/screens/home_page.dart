@@ -1,34 +1,40 @@
-import 'package:favmusic/components/loading_screen.dart';
+import 'package:favmusic/model/track.dart';
+import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubits/user_cubit/user_cubit.dart';
+import '../cubits/homepage_cubit/homepage_cubit.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final UserCubit _cubit = UserCubit()..initializePage();
+  final HomepageCubit _cubit = HomepageCubit(SpotifyService())
+    ..initializePage();
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => _cubit,
-      child: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
-        if (state is UserIdle) {
+      child:
+          BlocBuilder<HomepageCubit, HomepageState>(builder: (context, state) {
+        if (state is HomepageIdle) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               children: [
-                _buildSongSection("Popular Today"),
+                _buildSongSection(
+                    "Popular Today", state.recommendedTracks ?? []),
               ],
             ),
           );
         }
         return const Center(
-          child: LoadinScreen(),
+          child: CircularProgressIndicator(
+            color: Colors.white,
+          ),
         );
       }),
     );
   }
 
-  Column _buildSongSection(String sectionTitle) {
+  Column _buildSongSection(String sectionTitle, List<Track> tracks) {
     return Column(
       children: [
         Row(
@@ -39,14 +45,15 @@ class HomePage extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 250,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: [
-              _buildSongItem("Happier Than Ever", "Billie Eilish"),
-            ],
-          ),
-        ),
+            height: 250,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: tracks.length,
+              itemBuilder: (context, index) {
+                Track track = tracks[index];
+                return _buildSongItem(track);
+              },
+            )),
       ],
     );
   }
@@ -77,28 +84,55 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Padding _buildSongItem(String songTitle, String artistName) {
+  Padding _buildSongItem(Track track) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSongCover(),
-          const SizedBox(height: 8),
-          _buildSongTitle(songTitle),
-          _buildArtistName(artistName),
-        ],
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),
+      child: SizedBox(
+        width: 150,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSongCover(track.imageUrl),
+            const SizedBox(height: 8),
+            _buildSongTitle(track.name),
+            _buildArtistName(track.artistName),
+          ],
+        ),
       ),
     );
   }
 
-  Container _buildSongCover() {
+  Widget _buildSongCover(String? imageUrl) {
     return Container(
       height: 150,
       width: 150,
       decoration: BoxDecoration(
-        color: Colors.blue,
         borderRadius: BorderRadius.circular(12),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(12),
+        child: Image.network(
+          imageUrl ?? "",
+          fit: BoxFit.cover,
+          loadingBuilder: (BuildContext context, Widget child,
+              ImageChunkEvent? loadingProgress) {
+            if (loadingProgress == null) return child;
+
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        (loadingProgress.expectedTotalBytes ?? 1)
+                    : null,
+              ),
+            );
+          },
+          errorBuilder:
+              (BuildContext context, Object error, StackTrace? stackTrace) {
+            return const Center(child: Icon(Icons.error));
+          },
+        ),
       ),
     );
   }
@@ -107,6 +141,7 @@ class HomePage extends StatelessWidget {
     return Text(
       songTitle,
       style: const TextStyle(color: Colors.white, fontSize: 16),
+      overflow: TextOverflow.ellipsis,
     );
   }
 
@@ -116,6 +151,7 @@ class HomePage extends StatelessWidget {
       style: const TextStyle(
         color: Color(0xFFA0A0A0),
       ),
+      overflow: TextOverflow.ellipsis,
     );
   }
 }
