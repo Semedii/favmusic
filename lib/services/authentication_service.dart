@@ -16,7 +16,7 @@ class AuthenticationService {
     try {
       final result = await FlutterWebAuth.authenticate(
         url:
-            "https://accounts.spotify.com/authorize?client_id=$clientId&redirect_uri=$redirectUri&scope=user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&response_type=token&state=123",
+            "https://accounts.spotify.com/authorize?client_id=$clientId&redirect_uri=$redirectUri&scope=user-library-read%20user-read-private%20user-read-email%20user-read-playback-state%20user-modify-playback-state&response_type=token&state=123",
         callbackUrlScheme: 'waryaa',
       );
 

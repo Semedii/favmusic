@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
@@ -12,14 +10,15 @@ class HomepageCubit extends Cubit<HomepageState> {
   HomepageCubit(this.spotifyService) : super(HomepageInitial());
 
   initializePage() async {
-   
-
-    List<Track> recommendedTracks = await _getRecommendedTracks();
-    emit(HomepageIdle(
-        recommendedTracks: recommendedTracks,));
-  }
-    Future<List<Track>> _getRecommendedTracks() async {
-    final List<Track> recommendedTracks = await spotifyService.getRecommendedTracks();
-    return recommendedTracks;
+    final List<Track> recommendedTracks =
+        await spotifyService.getRecommendedTracks();
+    final List<Track>? usersSavedTracks =
+        await spotifyService.getUsersSavedTracks();
+    emit(
+      HomepageIdle(
+        recommendedTracks: recommendedTracks,
+        usersSavedTracks: usersSavedTracks,
+      ),
+    );
   }
 }

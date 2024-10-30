@@ -7,5 +7,6 @@ class HomepageInitial extends HomepageState {}
 
 class HomepageIdle extends HomepageState {
   List<Track>? recommendedTracks;
-  HomepageIdle({this.recommendedTracks});
+  List<Track>? usersSavedTracks;
+  HomepageIdle({this.recommendedTracks, this.usersSavedTracks});
 }

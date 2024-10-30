@@ -21,7 +21,8 @@ class HomePage extends StatelessWidget {
               children: [
                 _buildSongSection(
                     "Popular Today", state.recommendedTracks ?? []),
-              ],
+                     if (state.usersSavedTracks!=null && state.usersSavedTracks!.isNotEmpty) _buildSongSection(
+                    "My Saved Tracks", state.usersSavedTracks!),              ],
             ),
           );
         }
