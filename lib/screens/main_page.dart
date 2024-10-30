@@ -10,60 +10,67 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bodies = [
-      HomePage(),
-      LatestReleasesPage(),
-      MyPlayListPage(),
-    ];
     return BlocProvider(
       create: (context) => BottomNavigationBarCubit(),
       child: BlocBuilder<BottomNavigationBarCubit, BottomNavigationBarState>(
         builder: (context, state) {
-          state as BottomNavigationBarInitial;
+          final index = (state as BottomNavigationBarInitial).index;
           return Scaffold(
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: state.index,
-              onTap: BlocProvider.of<BottomNavigationBarCubit>(context).onIndexChange,
-              //selectedItemColor: AppColors.black,
-              items: [
-                BottomNavigationBarItem(
-                  icon: const Icon(Icons.home),
-                  label: "Home",
-                ),
-                // homeState is HomeStateLoaded && homeState.numberActiveOrder > 0
-                //     ? _getActiveOrdersWithBadge(homeState, localizations)
-                //     : _getActiveOrdersWithoutBadge(localizations),
-                BottomNavigationBarItem(
-                  icon: const Icon(Icons.music_note),
-                  label: "Hot Releases",
-                )
-              ],
-            ),
-            body: bodies[state.index],
+            bottomNavigationBar: _buildBottomNavigationBar(context, index),
+            body: _getBody(index),
           );
         },
       ),
     );
   }
 
-  // BottomNavigationBarItem _getActiveOrdersWithoutBadge(
-  //   AppLocalizations localizations,
-  // ) {
-  //   return BottomNavigationBarItem(
-  //     icon: const Icon(Icons.shopify_sharp),
-  //     label: localizations.activeOrders,
-  //   );
-  // }
+  BottomNavigationBar _buildBottomNavigationBar(
+      BuildContext context, int index) {
+    return BottomNavigationBar(
+      useLegacyColorScheme: false,
+      backgroundColor: Colors.black,
+      selectedLabelStyle: const TextStyle(color: Colors.white),
+      unselectedLabelStyle: const TextStyle(color: Colors.white70),
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white70,
+      type: BottomNavigationBarType.fixed,
+      currentIndex: index,
+      onTap: (newIndex) => BlocProvider.of<BottomNavigationBarCubit>(context)
+          .onIndexChange(newIndex),
+      items: _buildBottomNavigationBarItems(),
+    );
+  }
 
-  // BottomNavigationBarItem _getActiveOrdersWithBadge(
-  //   HomeStateLoaded homeState,
-  //   AppLocalizations localizations,
-  // ) {
-  //   return BottomNavigationBarItem(
-  //     icon: Badge(
-  //         label: Text(homeState.numberActiveOrder.toString()),
-  //         child: const Icon(Icons.shopify_sharp)),
-  //     label: localizations.activeOrders,
-  //   );
-  // }
+  List<BottomNavigationBarItem> _buildBottomNavigationBarItems() {
+    return const [
+      BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: "Home",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(
+          Icons.trending_up,
+        ),
+        label: "Trending",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.save),
+        label: "My Playlist",
+      ),
+      BottomNavigationBarItem(
+        icon: Icon(Icons.person),
+        label: "Me",
+      ),
+    ];
+  }
+
+  Widget _getBody(int index) {
+    var bodies = [
+      HomePage(),
+      LatestReleasesPage(),
+      MyPlayListPage(),
+      MyPlayListPage(),
+    ];
+    return bodies[index];
+  }
 }

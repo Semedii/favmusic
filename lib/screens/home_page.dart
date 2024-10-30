@@ -2,7 +2,6 @@ import 'package:favmusic/components/carousels/album_carousel.dart';
 import 'package:favmusic/components/loading_screen.dart';
 import 'package:favmusic/components/carousels/play_list_carousel.dart';
 import 'package:favmusic/model/album.dart';
-import 'package:favmusic/screens/bottom_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +19,6 @@ class HomePage extends StatelessWidget {
       appBar: CustomAppBar(
         displayName: "displayName",
       ),
-      bottomNavigationBar: MyBottomNavigationBar(),
       body: BlocProvider(
         create: (context) => _cubit,
         child: BlocBuilder<UserCubit, UserState>(

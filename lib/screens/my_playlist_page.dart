@@ -5,7 +5,6 @@ import 'package:favmusic/cubits/user_cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'bottom_navigator.dart';
 
 class MyPlayListPage extends StatelessWidget {
   MyPlayListPage({super.key});
@@ -15,7 +14,6 @@ class MyPlayListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(displayName: "displayName"),
-      bottomNavigationBar: MyBottomNavigationBar(),
       body: BlocProvider(
         create: (context) => _cubit,
         child: BlocBuilder<UserCubit, UserState>(

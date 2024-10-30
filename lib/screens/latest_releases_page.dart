@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubits/user_cubit/user_cubit.dart';
-import 'bottom_navigator.dart';
-
 class LatestReleasesPage extends StatelessWidget {
   LatestReleasesPage({super.key});
 
@@ -15,7 +13,6 @@ class LatestReleasesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(displayName: "displayName"),
-        bottomNavigationBar: MyBottomNavigationBar(),
         body: BlocProvider(
             create: (context) => _cubit,
             child: BlocBuilder<UserCubit, UserState>(
