@@ -10,28 +10,69 @@ class HomePage extends StatelessWidget {
     ..initializePage();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _cubit,
-      child:
-          BlocBuilder<HomepageCubit, HomepageState>(builder: (context, state) {
-        if (state is HomepageIdle) {
-          return Padding(
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+      appBar: AppBar(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            _getCircularImage('logo.jpeg', 24),
+            const SizedBox(width: 4),
+            const Text(
+              "FavMusic",
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
+        backgroundColor: Colors.transparent,
+        actions: [
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Column(
-              children: [
-                _buildSongSection(
-                    "Popular Today", state.recommendedTracks ?? []),
-                     if (state.usersSavedTracks!=null && state.usersSavedTracks!.isNotEmpty) _buildSongSection(
-                    "My Saved Tracks", state.usersSavedTracks!),              ],
+            child: _getCircularImage('profile_pic.jpeg', 48),
+          ),
+        ],
+      ),
+      body: BlocProvider(
+        create: (context) => _cubit,
+        child: BlocBuilder<HomepageCubit, HomepageState>(
+            builder: (context, state) {
+          if (state is HomepageIdle) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  children: [
+                    _buildSongSection(
+                        "Popular Today", state.recommendedTracks ?? []),
+                    if (state.usersSavedTracks != null &&
+                        state.usersSavedTracks!.isNotEmpty)
+                      _buildSongSection(
+                          "My Saved Tracks", state.usersSavedTracks!),
+                          _buildSongSection(
+                        "Trending Podcast", state.recommendedTracks ?? []),
+                  ],
+                ),
+              ),
+            );
+          }
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.white,
             ),
           );
-        }
-        return const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        );
-      }),
+        }),
+      ),
+    );
+  }
+
+  ClipOval _getCircularImage(String imageName, double size) {
+    return ClipOval(
+      child: Image.asset(
+        'assets/images/$imageName',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
+      ),
     );
   }
 

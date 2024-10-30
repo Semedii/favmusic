@@ -3,15 +3,30 @@ import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/PreferencesService.dart';
 import 'package:http/http.dart' as http;
 
-
 class SpotifyService {
+
+  Future<bool> isTokenValid(String? accessToken) async {
+    final response = await http.get(
+      Uri.parse('https://api.spotify.com/v1/me'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   Future<List<Track>> getRecommendedTracks() async {
     String baseUrl = 'https://api.spotify.com/v1/recommendations';
     String? accessToken = await PreferencesService.getAccessToken();
-    
+
     final response = await http.get(
-      Uri.parse('$baseUrl?seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA&max_popularity=90'),
+      Uri.parse(
+          '$baseUrl?seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA&max_popularity=90'),
       headers: {
         'Authorization': 'Bearer $accessToken',
       },
@@ -31,14 +46,16 @@ class SpotifyService {
         );
       }).toList();
     } else {
-      throw Exception('Failed to fetch Spotify playlists: ${response.statusCode}');
+      print("aaaa ${response.body}");
+      throw Exception(
+          'Failed to fetch Spotify playlists: ${response.statusCode}');
     }
   }
 
-    Future<List<Track>?> getUsersSavedTracks() async {
-      String baseUrl = 'https://api.spotify.com/v1/me/tracks';
+  Future<List<Track>?> getUsersSavedTracks() async {
+    String baseUrl = 'https://api.spotify.com/v1/me/tracks';
     String? accessToken = await PreferencesService.getAccessToken();
-    
+
     final response = await http.get(
       Uri.parse(baseUrl),
       headers: {
@@ -48,8 +65,8 @@ class SpotifyService {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-     final List<dynamic> tracklistsJson = data['items'];
-     final List<Track> tracks = tracklistsJson.map((tracklistsJson) {
+      final List<dynamic> tracklistsJson = data['items'];
+      final List<Track> tracks = tracklistsJson.map((tracklistsJson) {
         return Track(
             name: tracklistsJson['track']['name'],
             trackuri: tracklistsJson['track']['uri'],
@@ -57,9 +74,10 @@ class SpotifyService {
             artistName: tracklistsJson['track']['artists'][0]['name']);
       }).toList();
 
-  return tracks;
+      return tracks;
     } else {
-      throw Exception('Failed to fetch Spotify playlists: ${response.statusCode}, ${response.body}');
+      throw Exception(
+          'Failed to fetch Spotify playlists: ${response.statusCode}, ${response.body}');
     }
   }
 
@@ -71,7 +89,9 @@ class SpotifyService {
         'Authorization': 'Bearer $accessToken',
         'Content-Type': 'application/json',
       },
-      body: jsonEncode({'uris': [uri]}),
+      body: jsonEncode({
+        'uris': [uri]
+      }),
     );
   }
 

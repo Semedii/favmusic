@@ -1,6 +1,6 @@
 import 'package:favmusic/cubits/authentication/authentication_cubit.dart';
+import 'package:favmusic/screens/home_page.dart';
 import 'package:favmusic/screens/login_page.dart';
-import 'package:favmusic/screens/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,11 +14,10 @@ class AuthenticationWrapper extends StatelessWidget {
       child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
           state as AuthenticationInitial;
-          print("aaa ${state.isUserLoggedIn}");
           if(state.isUserLoggedIn==null || state.isUserLoggedIn==false){
             return LoginPage();
           }else {
-            return MainPage();
+            return HomePage();
           }
         },
       ),
