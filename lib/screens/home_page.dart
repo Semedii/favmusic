@@ -1,58 +1,121 @@
-import 'package:favmusic/components/carousels/album_carousel.dart';
 import 'package:favmusic/components/loading_screen.dart';
-import 'package:favmusic/components/carousels/play_list_carousel.dart';
-import 'package:favmusic/model/album.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubits/user_cubit/user_cubit.dart';
-import '../model/play_lists.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
   final UserCubit _cubit = UserCubit()..initializePage();
   @override
   Widget build(BuildContext context) {
-    return 
-    // Scaffold(
-    //   backgroundColor: const Color.fromARGB(255, 50, 50, 50),
-    //   body:
-       BlocProvider(
-        create: (context) => _cubit,
-        child: BlocBuilder<UserCubit, UserState>(
-            builder: (context, state) {
-          if (state is UserIdle) {
-            return Column(children: [
-              _getLatestRelease(state.latestReleases!),
-              const SizedBox(height: 10),
-              _getPlayLists(state.playlist!),
-            ]);
-          }
-          return const Center(
-            child: LoadinScreen(),
+    return BlocProvider(
+      create: (context) => _cubit,
+      child: BlocBuilder<UserCubit, UserState>(builder: (context, state) {
+        if (state is UserIdle) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                _buildSongSection("Popular Today"),
+              ],
+            ),
           );
-        }),
-    //  ),
+        }
+        return const Center(
+          child: LoadinScreen(),
+        );
+      }),
     );
   }
 
-  _getPlayLists(List<Playlist> playLists) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: PlayListCarousel(
-          seconds: 5,
-          items: playLists,
-          title: "My PlayList",
-          icon: Icons.trending_up_rounded),
+  Column _buildSongSection(String sectionTitle) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            _buildSectionTitle(sectionTitle),
+            const Spacer(),
+            _buildSeeAll(),
+          ],
+        ),
+        SizedBox(
+          height: 250,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: [
+              _buildSongItem("Happier Than Ever", "Billie Eilish"),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
-  _getLatestRelease(List<Album> albums) {
+  Text _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    );
+  }
+
+  Row _buildSeeAll() {
+    return Row(
+      children: [
+        Text(
+          "See all",
+          style: TextStyle(
+            color: Colors.grey[400],
+            fontSize: 12,
+          ),
+        ),
+        Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
+      ],
+    );
+  }
+
+  Padding _buildSongItem(String songTitle, String artistName) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: AlbumCarousel(
-          items: albums,
-          title: "Latest Releases",
-          icon: Icons.trending_up_rounded),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSongCover(),
+          const SizedBox(height: 8),
+          _buildSongTitle(songTitle),
+          _buildArtistName(artistName),
+        ],
+      ),
+    );
+  }
+
+  Container _buildSongCover() {
+    return Container(
+      height: 150,
+      width: 150,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(12),
+      ),
+    );
+  }
+
+  Text _buildSongTitle(String songTitle) {
+    return Text(
+      songTitle,
+      style: const TextStyle(color: Colors.white, fontSize: 16),
+    );
+  }
+
+  Text _buildArtistName(String artistName) {
+    return Text(
+      artistName,
+      style: const TextStyle(
+        color: Color(0xFFA0A0A0),
+      ),
     );
   }
 }
