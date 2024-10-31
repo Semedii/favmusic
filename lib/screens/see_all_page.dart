@@ -9,7 +9,7 @@ class SeeAllPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
        backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      appBar: const PreferredSize(preferredSize:  Size(double.infinity, 80),
+      appBar: const PreferredSize(preferredSize:  Size(double.infinity, 70),
       child: CustomAppBar(),
       ),
       body: ListView.builder(

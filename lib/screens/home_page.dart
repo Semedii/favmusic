@@ -1,3 +1,4 @@
+import 'package:favmusic/components/custom_app_bar.dart';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +14,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _getCircularImage('logo.png', 42),
-            const SizedBox(width: 4),
-            const Text(
-              "FavMusic",
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _getCircularImage('profile_pic.jpeg', 48),
-          ),
-        ],
+      appBar: const PreferredSize(preferredSize:  Size(double.infinity, 70),
+      child: CustomAppBar(),
       ),
       body: BlocProvider(
         create: (context) => _cubit,
@@ -75,17 +59,6 @@ class HomePage extends StatelessWidget {
             ),
           );
         }),
-      ),
-    );
-  }
-
-  ClipOval _getCircularImage(String imageName, double size) {
-    return ClipOval(
-      child: Image.asset(
-        'assets/images/$imageName',
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
       ),
     );
   }

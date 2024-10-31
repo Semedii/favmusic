@@ -1,3 +1,4 @@
+import 'package:favmusic/components/custom_app_bar.dart';
 import 'package:favmusic/components/time_stamps_slider.dart';
 import 'package:favmusic/cubits/play/play_cubit.dart';
 import 'package:favmusic/model/track.dart';
@@ -17,34 +18,8 @@ class PlayPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      appBar: AppBar(
-        leading: IconButton(
-            onPressed: ()async{
-              _spotifyService.pauseTrack;
-              GoRouter.of(context).pop();
-            } ,
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _getCircularImage('logo.png', 42),
-            const SizedBox(width: 4),
-            const Text(
-              "FavMusic",
-              style: TextStyle(color: Colors.white),
-            ),
-          ],
-        ),
-        backgroundColor: Colors.transparent,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: _getCircularImage('profile_pic.jpeg', 48),
-          ),
-        ],
+      appBar: const PreferredSize(preferredSize:  Size(double.infinity, 70),
+      child: CustomAppBar(),
       ),
       body: BlocProvider(
         create: (context) => PlayCubit(_spotifyService),
@@ -106,17 +81,6 @@ class PlayPage extends StatelessWidget {
         //   },
         // ),
       ],
-    );
-  }
-
-  ClipOval _getCircularImage(String imageName, double size) {
-    return ClipOval(
-      child: Image.asset(
-        'assets/images/$imageName',
-        width: size,
-        height: size,
-        fit: BoxFit.cover,
-      ),
     );
   }
 
