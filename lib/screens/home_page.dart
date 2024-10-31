@@ -44,16 +44,25 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildSongSection(
-                        "Popular Today", state.recommendedTracks ?? []),
+                      context,
+                      "Popular Today",
+                      state.recommendedTracks ?? [],
+                    ),
                     if (state.usersSavedEpisodes != null &&
                         state.usersSavedEpisodes!.isNotEmpty) ...{
                       _buildSongSection(
-                          "My Saved Episodes", state.usersSavedEpisodes ?? []),
+                        context,
+                        "My Saved Episodes",
+                        state.usersSavedEpisodes ?? [],
+                      ),
                     },
                     if (state.usersSavedTracks != null &&
                         state.usersSavedTracks!.isNotEmpty) ...{
                       _buildSongSection(
-                          "My Saved Tracks", state.usersSavedTracks!),
+                        context,
+                        "My Saved Tracks",
+                        state.usersSavedTracks!,
+                      ),
                     }
                   ],
                 ),
@@ -81,14 +90,18 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Column _buildSongSection(String sectionTitle, List<Track> tracks) {
+  Column _buildSongSection(
+    BuildContext context,
+    String sectionTitle,
+    List<Track> tracks,
+  ) {
     return Column(
       children: [
         Row(
           children: [
             _buildSectionTitle(sectionTitle),
             const Spacer(),
-            _buildSeeAll(),
+            _buildSeeAll(context, sectionTitle),
           ],
         ),
         SizedBox(
@@ -116,18 +129,21 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Row _buildSeeAll() {
-    return Row(
-      children: [
-        Text(
-          "See all",
-          style: TextStyle(
-            color: Colors.grey[400],
-            fontSize: 12,
+  Widget _buildSeeAll(BuildContext context, String category) {
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).push("/SeeAllPage", extra: category),
+      child: Row(
+        children: [
+          Text(
+            "See all",
+            style: TextStyle(
+              color: Colors.grey[400],
+              fontSize: 12,
+            ),
           ),
-        ),
-        Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
-      ],
+          Icon(Icons.chevron_right, color: Colors.grey[400], size: 18),
+        ],
+      ),
     );
   }
 
