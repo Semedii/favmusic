@@ -2,6 +2,7 @@ import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../cubits/homepage_cubit/homepage_cubit.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,7 +49,7 @@ class HomePage extends StatelessWidget {
                         state.usersSavedTracks!.isNotEmpty)
                       _buildSongSection(
                           "My Saved Tracks", state.usersSavedTracks!),
-                          _buildSongSection(
+                    _buildSongSection(
                         "Trending Podcast", state.recommendedTracks ?? []),
                   ],
                 ),
@@ -93,7 +94,7 @@ class HomePage extends StatelessWidget {
               itemCount: tracks.length,
               itemBuilder: (context, index) {
                 Track track = tracks[index];
-                return _buildSongItem(track);
+                return _buildSongItem(context, track);
               },
             )),
       ],
@@ -126,19 +127,22 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Padding _buildSongItem(Track track) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),
-      child: SizedBox(
-        width: 150,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSongCover(track.imageUrl),
-            const SizedBox(height: 8),
-            _buildSongTitle(track.name),
-            _buildArtistName(track.artistName),
-          ],
+  GestureDetector _buildSongItem(BuildContext context, Track track) {
+    return GestureDetector(
+      onTap: () => GoRouter.of(context).push("/PlayPage", extra: track),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),
+        child: SizedBox(
+          width: 150,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSongCover(track.imageUrl),
+              const SizedBox(height: 8),
+              _buildSongTitle(track.name),
+              _buildArtistName(track.artistName),
+            ],
+          ),
         ),
       ),
     );

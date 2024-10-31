@@ -83,7 +83,7 @@ class SpotifyService {
 
   Future<void> playTrack(String uri) async {
     String? accessToken = await PreferencesService.getAccessToken();
-    await http.put(
+    var response =await http.put(
       Uri.parse('https://api.spotify.com/v1/me/player/play'),
       headers: {
         'Authorization': 'Bearer $accessToken',
@@ -93,6 +93,7 @@ class SpotifyService {
         'uris': [uri]
       }),
     );
+    print("aaa 12 ${response.body}");
   }
 
   Future<void> pauseTrack() async {
