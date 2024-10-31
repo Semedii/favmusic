@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _getCircularImage('logo.jpeg', 24),
+            _getCircularImage('logo.png', 42),
             const SizedBox(width: 4),
             const Text(
               "FavMusic",
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
           children: [
             _buildSectionTitle(sectionTitle),
             const Spacer(),
-            _buildSeeAll(),
+            //_buildSeeAll(),
           ],
         ),
         SizedBox(

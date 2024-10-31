@@ -14,10 +14,18 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: BlocProvider(
-        create: (context) => _loginCubit,
-        child: BlocBuilder<LoginCubit, LoginState>(builder: _mapStateToWidget),
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color.fromARGB(255, 81, 83, 84), Color.fromARGB(255, 0, 0, 0)],
+        )),
+        child: BlocProvider(
+          create: (context) => _loginCubit,
+          child:
+              BlocBuilder<LoginCubit, LoginState>(builder: _mapStateToWidget),
+        ),
       ),
     );
   }
@@ -36,12 +44,14 @@ class LoginPage extends StatelessWidget {
 
   Padding _buildLoginContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
+      padding: const EdgeInsets.only(top: 120),
       child: Column(
         children: [
           _getTitle(),
           _getLogo(),
           _getSpotifyButton(context),
+          Spacer(),
+          Image.asset("assets/images/bottom-logo.png")
         ],
       ),
     );
@@ -56,23 +66,23 @@ class LoginPage extends StatelessWidget {
 
   TextStyle _getTitleTextStyle() {
     return const TextStyle(
-      fontSize: 24.0,
+      fontSize: 32.0,
       fontWeight: FontWeight.bold,
-      color: Colors.blueGrey,
+      color: Colors.white,
       letterSpacing: 1.5,
     );
   }
 
   Widget _getLogo() {
     return Image.asset(
-      'assets/images/logo.jpeg',
+      'assets/images/logo.png',
     );
   }
 
   Widget _getSpotifyButton(BuildContext context) {
     return MyButton(
         text: 'Login with Spotify',
-        color: const Color.fromARGB(255, 49, 51, 50),
+        color: const Color.fromARGB(255, 99, 101, 100),
         onTap: BlocProvider.of<LoginCubit>(context).authenticate);
   }
 }

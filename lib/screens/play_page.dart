@@ -4,21 +4,33 @@ import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class PlayPage extends StatelessWidget {
-  const PlayPage({required this.track, super.key});
+  PlayPage({required this.track, super.key});
 
   final Track track;
+
+  final SpotifyService _spotifyService = SpotifyService();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 48, 48, 48),
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: ()async{
+              _spotifyService.pauseTrack;
+              GoRouter.of(context).pop();
+            } ,
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            )),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _getCircularImage('logo.jpeg', 24),
+            _getCircularImage('logo.png', 42),
             const SizedBox(width: 4),
             const Text(
               "FavMusic",
@@ -35,7 +47,7 @@ class PlayPage extends StatelessWidget {
         ],
       ),
       body: BlocProvider(
-        create: (context) => PlayCubit(SpotifyService()),
+        create: (context) => PlayCubit(_spotifyService),
         child: BlocBuilder<PlayCubit, PlayState>(
           builder: (context, state) {
             state as PlayInitial;
@@ -49,7 +61,7 @@ class PlayPage extends StatelessWidget {
                 const SizedBox(height: 30),
                 _buildPlayControls(context, state.isPlaying),
                 const SizedBox(height: 20),
-                const TimeStampsSlider(),
+              //  const TimeStampsSlider(),
               ],
             );
           },
@@ -62,13 +74,13 @@ class PlayPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        IconButton(
-          icon: Icon(Icons.skip_previous, color: Colors.white),
-          iconSize: 36,
-          onPressed: () {
-            // Implement previous song functionality
-          },
-        ),
+        // IconButton(
+        //   icon: const Icon(Icons.skip_previous, color: Colors.white),
+        //   iconSize: 36,
+        //   onPressed: () {
+        //     // Implement previous song functionality
+        //   },
+        // ),
         const SizedBox(width: 20),
         Container(
           decoration: const BoxDecoration(
@@ -79,20 +91,20 @@ class PlayPage extends StatelessWidget {
             icon: isPlaying
                 ? const Icon(Icons.pause, color: Colors.black)
                 : const Icon(Icons.play_arrow, color: Colors.black),
-            iconSize: 36,
+            iconSize:42,
             onPressed: () {
               BlocProvider.of<PlayCubit>(context).playTrack(track);
             },
           ),
         ),
         const SizedBox(width: 20),
-        IconButton(
-          icon: const Icon(Icons.skip_next, color: Colors.white),
-          iconSize: 36,
-          onPressed: () {
-            // Implement next song functionality
-          },
-        ),
+        // IconButton(
+        //   icon: const Icon(Icons.skip_next, color: Colors.white),
+        //   iconSize: 36,
+        //   onPressed: () {
+        //     // Implement next song functionality
+        //   },
+        // ),
       ],
     );
   }
