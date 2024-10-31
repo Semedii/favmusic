@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
+  const CustomAppBar({this.title, super.key});
+
+  final Widget? title;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          _getCircularImage('logo.png', 42),
-          const SizedBox(width: 4),
-          const Text(
-            "FavMusic",
-            style: TextStyle(color: Colors.white),
+      title: title ??
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _getCircularImage('logo.png', 42),
+              const SizedBox(width: 4),
+              const Text(
+                "FavMusic",
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
           ),
-        ],
-      ),
       backgroundColor: Colors.transparent,
       actions: [
         Padding(
