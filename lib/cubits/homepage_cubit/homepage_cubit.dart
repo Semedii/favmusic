@@ -10,12 +10,15 @@ class HomepageCubit extends Cubit<HomepageState> {
   HomepageCubit(this.spotifyService) : super(HomepageInitial());
 
   initializePage() async {
-    final List<Track> recommendedTracks =
-        await spotifyService.getRecommendedTracks();
+        final List<Track> recommendedTracks =
+        await spotifyService.getRecommendedTracks(isLimited: true);
+        final List<Track>? usersSavedEpisodes =
+        await spotifyService.getUsersSavedEpisodes(isLimited: true);
     final List<Track>? usersSavedTracks =
-        await spotifyService.getUsersSavedTracks();
+        await spotifyService.getUsersSavedTracks(isLimited: true);
     emit(
       HomepageIdle(
+        usersSavedEpisodes: usersSavedEpisodes,
         recommendedTracks: recommendedTracks,
         usersSavedTracks: usersSavedTracks,
       ),

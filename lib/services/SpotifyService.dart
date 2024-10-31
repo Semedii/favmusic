@@ -4,7 +4,6 @@ import 'package:favmusic/services/PreferencesService.dart';
 import 'package:http/http.dart' as http;
 
 class SpotifyService {
-
   Future<bool> isTokenValid(String? accessToken) async {
     final response = await http.get(
       Uri.parse('https://api.spotify.com/v1/me'),
@@ -20,13 +19,14 @@ class SpotifyService {
     }
   }
 
-  Future<List<Track>> getRecommendedTracks() async {
+  Future<List<Track>> getRecommendedTracks({bool isLimited = false}) async {
+    String limit = isLimited ? "&limit=5" : "";
     String baseUrl = 'https://api.spotify.com/v1/recommendations';
     String? accessToken = await PreferencesService.getAccessToken();
 
     final response = await http.get(
       Uri.parse(
-          '$baseUrl?seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA&max_popularity=90'),
+          '$baseUrl?seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA&max_popularity=90$limit'),
       headers: {
         'Authorization': 'Bearer $accessToken',
       },
@@ -48,12 +48,13 @@ class SpotifyService {
     } else {
       print("aaaa ${response.body}");
       throw Exception(
-          'Failed to fetch Spotify playlists: ${response.statusCode}');
+          'Failed to fetch Spotify recommended: ${response.statusCode}');
     }
   }
 
-  Future<List<Track>?> getUsersSavedTracks() async {
-    String baseUrl = 'https://api.spotify.com/v1/me/tracks';
+  Future<List<Track>?> getUsersSavedTracks({bool isLimited=false}) async {
+    String limit = isLimited ? "&limit=5" : "";
+    String baseUrl = 'https://api.spotify.com/v1/me/tracks?$limit';
     String? accessToken = await PreferencesService.getAccessToken();
 
     final response = await http.get(
@@ -77,13 +78,43 @@ class SpotifyService {
       return tracks;
     } else {
       throw Exception(
-          'Failed to fetch Spotify playlists: ${response.statusCode}, ${response.body}');
+          'Failed to fetch users saved playlist: ${response.statusCode}, ${response.body}');
+    }
+  }
+
+  Future<List<Track>?> getUsersSavedEpisodes({bool isLimited = false}) async {
+    String limit = isLimited ? "&limit=5" : "";
+    String baseUrl = 'https://api.spotify.com/v1/me/episodes?$limit';
+    String? accessToken = await PreferencesService.getAccessToken();
+
+    final response = await http.get(
+      Uri.parse(baseUrl),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final List<dynamic> tracklistsJson = data['items'];
+      final List<Track> tracks = tracklistsJson.map((tracklistsJson) {
+        return Track(
+            name: tracklistsJson['episode']['name'],
+            trackuri: tracklistsJson['episode']['uri'],
+            imageUrl: tracklistsJson['episode']['images']?[0]['url'],
+            artistName: tracklistsJson['episode']['show']['publisher']);
+      }).toList();
+
+      return tracks;
+    } else {
+      throw Exception(
+          'Failed to fetch users saved episodes: ${response.statusCode}, ${response.body}');
     }
   }
 
   Future<void> playTrack(String uri) async {
     String? accessToken = await PreferencesService.getAccessToken();
-    var response =await http.put(
+    var response = await http.put(
       Uri.parse('https://api.spotify.com/v1/me/player/play'),
       headers: {
         'Authorization': 'Bearer $accessToken',

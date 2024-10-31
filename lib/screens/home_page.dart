@@ -45,12 +45,16 @@ class HomePage extends StatelessWidget {
                   children: [
                     _buildSongSection(
                         "Popular Today", state.recommendedTracks ?? []),
+                    if (state.usersSavedEpisodes != null &&
+                        state.usersSavedEpisodes!.isNotEmpty) ...{
+                      _buildSongSection(
+                          "My Saved Episodes", state.usersSavedEpisodes ?? []),
+                    },
                     if (state.usersSavedTracks != null &&
-                        state.usersSavedTracks!.isNotEmpty)
+                        state.usersSavedTracks!.isNotEmpty) ...{
                       _buildSongSection(
                           "My Saved Tracks", state.usersSavedTracks!),
-                    _buildSongSection(
-                        "Trending Podcast", state.recommendedTracks ?? []),
+                    }
                   ],
                 ),
               ),
@@ -84,7 +88,7 @@ class HomePage extends StatelessWidget {
           children: [
             _buildSectionTitle(sectionTitle),
             const Spacer(),
-            //_buildSeeAll(),
+            _buildSeeAll(),
           ],
         ),
         SizedBox(
