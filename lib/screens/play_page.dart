@@ -1,11 +1,9 @@
 import 'package:favmusic/components/custom_app_bar.dart';
-import 'package:favmusic/components/time_stamps_slider.dart';
 import 'package:favmusic/cubits/play/play_cubit.dart';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class PlayPage extends StatelessWidget {
   PlayPage({required this.track, super.key});
@@ -49,13 +47,6 @@ class PlayPage extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // IconButton(
-        //   icon: const Icon(Icons.skip_previous, color: Colors.white),
-        //   iconSize: 36,
-        //   onPressed: () {
-        //     // Implement previous song functionality
-        //   },
-        // ),
         const SizedBox(width: 20),
         Container(
           decoration: const BoxDecoration(
@@ -73,13 +64,6 @@ class PlayPage extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 20),
-        // IconButton(
-        //   icon: const Icon(Icons.skip_next, color: Colors.white),
-        //   iconSize: 36,
-        //   onPressed: () {
-        //     // Implement next song functionality
-        //   },
-        // ),
       ],
     );
   }

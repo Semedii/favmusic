@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
-import 'package:flutter/material.dart';
 
 part 'homepage_state.dart';
 

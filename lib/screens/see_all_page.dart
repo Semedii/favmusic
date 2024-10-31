@@ -61,7 +61,7 @@ class SeeAllPage extends StatelessWidget {
                         _buildSongCover(track),
                         _buildSongAndArtistName(track),
                         const Spacer(),
-                        _buildPlayButton()
+                        _buildPlayButton(context, state.isPlaying, track)
                       ],
                     ),
                   ),
@@ -90,7 +90,7 @@ class SeeAllPage extends StatelessWidget {
       width: 70,
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: NetworkImage(track?.imageUrl ?? ""), fit: BoxFit.cover),
+              image: NetworkImage(track.imageUrl ?? ""), fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(12)),
     );
   }
@@ -101,7 +101,7 @@ class SeeAllPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildSongTitle(track!.name),
+          _buildSongTitle(track.name),
           const SizedBox(height: 8),
           _buildArtistName(track.artistName)
         ],
@@ -109,16 +109,18 @@ class SeeAllPage extends StatelessWidget {
     );
   }
 
-  Padding _buildPlayButton() {
+  Padding _buildPlayButton(BuildContext context, bool isPlaying, Track track) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.play_arrow,
-            color: Colors.white,
-            size: 32,
-          )),
+        icon: isPlaying
+            ? const Icon(Icons.pause, color: Colors.black)
+            : const Icon(Icons.play_arrow, color: Colors.black),
+        iconSize: 42,
+        onPressed: () {
+          BlocProvider.of<SeeAllCubit>(context).playTrack(track);
+        },
+      ),
     );
   }
 

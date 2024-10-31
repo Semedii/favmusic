@@ -12,10 +12,10 @@ class PlayCubit extends Cubit<PlayState> {
     var lastState = state as PlayInitial;
     if (lastState.isPlaying) {
       await spotifyService.pauseTrack();
-      emit(lastState.copyWith(isPlaying: false, playingTrack: playingTrack));
+      emit(lastState.copyWith(isPlaying: false));
     } else {
       await spotifyService.playTrack(playingTrack.trackuri);
-      emit(lastState.copyWith(isPlaying: true, playingTrack: playingTrack));
+      emit(lastState.copyWith(isPlaying: true));
     }
   }
 }
