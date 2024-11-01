@@ -23,14 +23,29 @@ class SeeAllCubit extends Cubit<SeeAllState> {
     }
   }
 
-    playTrack(Track playingTrack) async {
+  playTrack(Track playingTrack, int playingIndex) async {
     var lastState = state as SeeAllIdle;
+    emit(lastState.copyWith(isUpdating: true));
     if (lastState.isPlaying) {
       await spotifyService.pauseTrack();
-      emit(lastState.copyWith(isPlaying: false));
-    } else {
-      await spotifyService.playTrack(playingTrack.trackuri);
-      emit(lastState.copyWith(isPlaying: true));
+      if (lastState.playingIndex == playingIndex) {
+        emit(
+          lastState.copyWith(
+            isPlaying: false,
+            playingIndex: -1,
+            isUpdating: false,
+          ),
+        );
+        return;
+      }
     }
+    await spotifyService.playTrack(playingTrack.trackuri);
+    emit(
+      lastState.copyWith(
+        isPlaying: true,
+        playingIndex: playingIndex,
+        isUpdating: false,
+      ),
+    );
   }
 }
