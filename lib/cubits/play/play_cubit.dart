@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:favmusic/model/track.dart';
-import 'package:favmusic/services/SpotifyService.dart';
+import 'package:favmusic/services/spotify_service.dart';
 
 part 'play_state.dart';
 

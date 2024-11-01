@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:favmusic/services/PreferencesService.dart';
-import 'package:favmusic/services/SpotifyService.dart';
+import 'package:favmusic/services/preferences_service.dart';
+import 'package:favmusic/services/spotify_service.dart';
 
 part 'authentication_state.dart';
 

@@ -1,6 +1,6 @@
 import 'package:favmusic/components/custom_end_drawer.dart';
 import 'package:favmusic/model/track.dart';
-import 'package:favmusic/services/SpotifyService.dart';
+import 'package:favmusic/services/spotify_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';

@@ -1,7 +1,7 @@
 import 'package:favmusic/components/custom_app_bar.dart';
 import 'package:favmusic/cubits/play/play_cubit.dart';
 import 'package:favmusic/model/track.dart';
-import 'package:favmusic/services/SpotifyService.dart';
+import 'package:favmusic/services/spotify_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

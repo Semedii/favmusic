@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:favmusic/model/track.dart';
-import 'package:favmusic/services/PreferencesService.dart';
+import 'package:favmusic/services/preferences_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

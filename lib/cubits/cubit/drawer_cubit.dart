@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:favmusic/services/PreferencesService.dart';
+import 'package:favmusic/services/preferences_service.dart';
 
 
 part 'drawer_state.dart';
