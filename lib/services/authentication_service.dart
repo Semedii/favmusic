@@ -1,7 +1,10 @@
 // lib/services/authentication_service.dart
+import 'dart:convert';
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class AuthenticationService {
   Future<String?> authenticate() async {
@@ -30,8 +33,27 @@ class AuthenticationService {
     }
   }
 
+  Future<bool> saveUsername(String? accessToken) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final response = await http.get(
+      Uri.parse('https://api.spotify.com/v1/me'),
+      headers: {
+        'Authorization': 'Bearer $accessToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      await prefs.setString('userName', data["display_name"]);
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<void> saveToken(String accessToken) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('accessToken', accessToken);
   }
+  
 }

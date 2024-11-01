@@ -13,6 +13,7 @@ class LoginCubit extends Cubit<LoginState> {
     
     if (accessToken != null) {
       await _authService.saveToken(accessToken);
+      await _authService.saveUsername(accessToken);
       emit(LoginSuccess());
     } else {
       print('Access token not found.');

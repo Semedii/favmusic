@@ -1,36 +1,49 @@
+import 'package:favmusic/cubits/cubit/drawer_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomEndDrawer extends StatelessWidget {
   const CustomEndDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 48,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildUserInfo(),
-            _buildSections(),
-            _buildLogoutButton(),
-          ],
-        ),
+    return BlocProvider(
+      create: (context) => DrawerCubit()..initPage(),
+      child: BlocBuilder<DrawerCubit, DrawerState>(
+        builder: (context, state) {
+          if(state is DrawerIdle){
+          return Drawer(
+            backgroundColor: const Color.fromARGB(255, 48, 48, 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 48,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildUserInfo(state.userName),
+                  _buildSections(),
+                  _buildLogoutButton(context),
+                ],
+              ),
+            ),
+          );
+          }
+          return Container();
+        },
       ),
     );
   }
 
-  Padding _buildUserInfo() {
+  Padding _buildUserInfo(String username) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
         children: [
           _getCircularImage('profile_pic.jpeg', 48),
           const SizedBox(width: 16),
-          Text("Semedy", style: TextStyle(color: Colors.white, fontSize: 24)),
+          Text(username , style: const TextStyle(color: Colors.white, fontSize: 24)),
         ],
       ),
     );
@@ -49,15 +62,21 @@ class CustomEndDrawer extends StatelessWidget {
     ]);
   }
 
-  Padding _buildLogoutButton() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Log out", style: TextStyle(color: Colors.white, fontSize: 24)),
-          Icon(Icons.logout, color: Colors.red, size: 32)
-        ],
+  Padding _buildLogoutButton(BuildContext context) {
+    return  Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: GestureDetector(
+        onTap: (){
+          BlocProvider.of<DrawerCubit>(context).logout();
+          GoRouter.of(context).pushReplacement('/');
+        },
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("Log out", style: TextStyle(color: Colors.white, fontSize: 24)),
+            Icon(Icons.logout, color: Colors.red, size: 32)
+          ],
+        ),
       ),
     );
   }

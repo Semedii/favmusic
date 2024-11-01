@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/PreferencesService.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SpotifyService {
   Future<bool> isTokenValid(String? accessToken) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
     final response = await http.get(
       Uri.parse('https://api.spotify.com/v1/me'),
       headers: {
@@ -13,6 +15,8 @@ class SpotifyService {
     );
 
     if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      await prefs.setString('userName', data["display_name"]);
       return true;
     } else {
       return false;
@@ -52,7 +56,7 @@ class SpotifyService {
     }
   }
 
-  Future<List<Track>?> getUsersSavedTracks({bool isLimited=false}) async {
+  Future<List<Track>?> getUsersSavedTracks({bool isLimited = false}) async {
     String limit = isLimited ? "&limit=5" : "";
     String baseUrl = 'https://api.spotify.com/v1/me/tracks?$limit';
     String? accessToken = await PreferencesService.getAccessToken();
