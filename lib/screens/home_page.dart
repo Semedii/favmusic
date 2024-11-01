@@ -1,9 +1,10 @@
 import 'package:favmusic/components/custom_end_drawer.dart';
 import 'package:favmusic/model/track.dart';
+import 'package:favmusic/screens/play_page.dart';
+import 'package:favmusic/screens/see_all_page.dart';
 import 'package:favmusic/services/spotify_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import '../cubits/homepage_cubit/homepage_cubit.dart';
 
 class HomePage extends StatelessWidget {
@@ -34,9 +35,12 @@ class HomePage extends StatelessWidget {
       ),
       endDrawer: const CustomEndDrawer(),
       body: BlocProvider(
-        create: (context) => HomepageCubit(_spotifyService)..initializePage(),
+        create: (context) => HomepageCubit(_spotifyService),
         child: BlocBuilder<HomepageCubit, HomepageState>(
             builder: (context, state) {
+          if (state is HomepageInitial) {
+            BlocProvider.of<HomepageCubit>(context).initializePage();
+          }
           if (state is HomepageIdle) {
             return SingleChildScrollView(
               child: Padding(
@@ -145,7 +149,9 @@ class HomePage extends StatelessWidget {
 
   Widget _buildSeeAll(BuildContext context, String category) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).push("/SeeAllPage", extra: category),
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context)=> SeeAllPage(category: category)));
+      } ,
       child: Row(
         children: [
           Text(
@@ -163,7 +169,7 @@ class HomePage extends StatelessWidget {
 
   GestureDetector _buildSongItem(BuildContext context, Track track) {
     return GestureDetector(
-      onTap: () => GoRouter.of(context).push("/PlayPage", extra: track),
+      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> PlayPage(track: track))),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 6),
         child: SizedBox(
