@@ -22,9 +22,12 @@ class CustomAppBar extends StatelessWidget {
           ),
       backgroundColor: Colors.transparent,
       actions: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: _getCircularImage('profile_pic.jpeg', 48),
+        GestureDetector(
+          onTap: (){},
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: _getCircularImage('profile_pic.jpeg', 48),
+          ),
         ),
       ],
     );

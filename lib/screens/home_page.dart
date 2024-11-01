@@ -1,4 +1,4 @@
-import 'package:favmusic/components/custom_app_bar.dart';
+import 'package:favmusic/components/custom_end_drawer.dart';
 import 'package:favmusic/model/track.dart';
 import 'package:favmusic/services/SpotifyService.dart';
 import 'package:flutter/material.dart';
@@ -8,17 +8,33 @@ import '../cubits/homepage_cubit/homepage_cubit.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  final HomepageCubit _cubit = HomepageCubit(SpotifyService())
-    ..initializePage();
+
+  final SpotifyService _spotifyService = SpotifyService();
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: const Color.fromARGB(255, 48, 48, 48),
-      appBar: const PreferredSize(preferredSize:  Size(double.infinity, 70),
-      child: CustomAppBar(),
+      appBar: AppBar(
+        title: _buildAppBarTitle(),
+        backgroundColor: Colors.transparent,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              _scaffoldKey.currentState?.openEndDrawer();
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: _getCircularImage('profile_pic.jpeg', 48),
+            ),
+          ),
+        ],
       ),
+      endDrawer: const CustomEndDrawer(),
       body: BlocProvider(
-        create: (context) => _cubit,
+        create: (context) => HomepageCubit(_spotifyService)..initializePage(),
         child: BlocBuilder<HomepageCubit, HomepageState>(
             builder: (context, state) {
           if (state is HomepageIdle) {
@@ -59,6 +75,31 @@ class HomePage extends StatelessWidget {
             ),
           );
         }),
+      ),
+    );
+  }
+
+  _buildAppBarTitle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _getCircularImage('logo.png', 42),
+        const SizedBox(width: 4),
+        const Text(
+          "FavMusic",
+          style: TextStyle(color: Colors.white),
+        ),
+      ],
+    );
+  }
+
+  ClipOval _getCircularImage(String imageName, double size) {
+    return ClipOval(
+      child: Image.asset(
+        'assets/images/$imageName',
+        width: size,
+        height: size,
+        fit: BoxFit.cover,
       ),
     );
   }
