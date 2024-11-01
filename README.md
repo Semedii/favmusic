@@ -2,6 +2,12 @@ favMusic App
 
 The favMusic App is a mobile application built with Flutter that allows users to login with their Spotify account, view their saved playlists and latest releases, and play/pause tracks from within the app.
 
+
+https://github.com/user-attachments/assets/05b7c3fb-75e9-406f-8d03-332fe815c650
+
+
+
+
 #Installation
 
 Clone the repository to your local machine.
