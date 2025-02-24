@@ -47,6 +47,9 @@ dependencies:
   flutter_web_auth: ^0.6.0
   shared_preferences: ^2.1.0
   flutter_dotenv: ^5.2.1
+  mocktail: ^1.0.4
+  test: ^1.25.7
+  bloc_test: ^9.1.7
 
 
 dev_dependencies:
