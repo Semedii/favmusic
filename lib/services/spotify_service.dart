@@ -38,6 +38,7 @@ class SpotifyService {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
+      // ignore: avoid_print
       print("warr hore ${data['tracks']}");
       final List<dynamic> tracklistsJson = data['tracks'];
 
@@ -50,6 +51,7 @@ class SpotifyService {
         );
       }).toList();
     } else {
+      // ignore: avoid_print
       print("aaaa ${response.body}");
       throw Exception(
           'Failed to fetch Spotify recommended: ${response.statusCode}');
@@ -128,6 +130,7 @@ class SpotifyService {
         'uris': [uri]
       }),
     );
+    // ignore: avoid_print
     print("aaa 12 ${response.body}");
   }
 

@@ -1,4 +1,3 @@
-// lib/services/authentication_service.dart
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +11,7 @@ class AuthenticationService {
     final redirectUri = dotenv.env['REDIRECT_URI'];
 
     if (clientId == null || redirectUri == null) {
+      // ignore: avoid_print
       print('Client ID or Redirect URI is missing.');
       return null;
     }
@@ -28,6 +28,7 @@ class AuthenticationService {
       return Uri.parse('http://website/index.html?$fragment')
           .queryParameters['access_token'];
     } catch (e) {
+      // ignore: avoid_print
       print('Authentication error: $e');
       return null;
     }
@@ -55,5 +56,4 @@ class AuthenticationService {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('accessToken', accessToken);
   }
-  
 }

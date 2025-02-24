@@ -30,10 +30,11 @@ class TrackWidget extends StatelessWidget {
               ),
               trailing: selectedIndex == index
                   ? IconButton(
-                      onPressed: () => onTap(index), icon: Icon(Icons.pause))
+                      onPressed: () => onTap(index),
+                      icon: const Icon(Icons.pause))
                   : IconButton(
                       onPressed: () => onTap(index),
-                      icon: Icon(Icons.play_arrow)));
+                      icon: const Icon(Icons.play_arrow)));
         });
   }
 }

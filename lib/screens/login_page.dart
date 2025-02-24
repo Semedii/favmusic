@@ -19,7 +19,10 @@ class LoginPage extends StatelessWidget {
             gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Color.fromARGB(255, 81, 83, 84), Color.fromARGB(255, 0, 0, 0)],
+          colors: [
+            Color.fromARGB(255, 81, 83, 84),
+            Color.fromARGB(255, 0, 0, 0)
+          ],
         )),
         child: BlocProvider(
           create: (context) => _loginCubit,
@@ -35,7 +38,8 @@ class LoginPage extends StatelessWidget {
       return _buildLoginContent(context);
     } else if (state is LoginSuccess) {
       SchedulerBinding.instance.addPostFrameCallback((_) {
-       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
       });
     }
 
@@ -50,7 +54,7 @@ class LoginPage extends StatelessWidget {
           _getTitle(),
           _getLogo(),
           _getSpotifyButton(context),
-          Spacer(),
+          const Spacer(),
           Image.asset("assets/images/bottom-logo.png")
         ],
       ),

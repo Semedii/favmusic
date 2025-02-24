@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LatestReleasesPage extends StatelessWidget {
-  LatestReleasesPage({super.key});
+  const LatestReleasesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container();
-}
+  }
 }
