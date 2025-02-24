@@ -46,10 +46,21 @@ void main() {
     act: (cubit) => cubit.initializePage(),
     expect: () => [
       isA<HomepageIdle>()
-        ..having((s) => s.recommendedTracks, 'recommendedTracks', sampleTracks)
         ..having(
-            (s) => s.usersSavedEpisodes, 'usersSavedEpisodes', sampleTracks)
-        ..having((s) => s.usersSavedTracks, 'usersSavedTracks', sampleTracks)
+          (s) => s.recommendedTracks,
+          'recommendedTracks',
+          equals(sampleTracks),
+        )
+        ..having(
+          (s) => s.usersSavedEpisodes,
+          'usersSavedEpisodes',
+          equals(sampleTracks),
+        )
+        ..having(
+          (s) => s.usersSavedTracks,
+          'usersSavedTracks',
+          equals(sampleTracks),
+        )
     ],
   );
 
@@ -58,10 +69,6 @@ void main() {
     build: () {
       when(() => mockSpotifyService.getRecommendedTracks(isLimited: true))
           .thenThrow(Exception('Failed'));
-      when(() => mockSpotifyService.getUsersSavedEpisodes(isLimited: true))
-          .thenAnswer((_) async => sampleTracks);
-      when(() => mockSpotifyService.getUsersSavedTracks(isLimited: true))
-          .thenAnswer((_) async => sampleTracks);
       return HomepageCubit(mockSpotifyService);
     },
     act: (cubit) => cubit.initializePage(),
