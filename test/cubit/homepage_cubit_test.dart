@@ -46,21 +46,21 @@ void main() {
     act: (cubit) => cubit.initializePage(),
     expect: () => [
       isA<HomepageIdle>()
-        ..having(
-          (s) => s.recommendedTracks,
-          'recommendedTracks',
-          equals(sampleTracks),
-        )
-        ..having(
-          (s) => s.usersSavedEpisodes,
-          'usersSavedEpisodes',
-          equals(sampleTracks),
-        )
-        ..having(
-          (s) => s.usersSavedTracks,
-          'usersSavedTracks',
-          equals(sampleTracks),
-        )
+          .having(
+            (s) => s.recommendedTracks,
+            'recommendedTracks',
+            equals(sampleTracks),
+          )
+          .having(
+            (s) => s.usersSavedEpisodes,
+            'usersSavedEpisodes',
+            equals(sampleTracks),
+          )
+          .having(
+            (s) => s.usersSavedTracks,
+            'usersSavedTracks',
+            equals(sampleTracks),
+          )
     ],
   );
 
