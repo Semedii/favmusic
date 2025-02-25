@@ -29,6 +29,12 @@ jobs:
       - name: Restore dependencies
         run: flutter pub get
 
+      - name: Set environment variables for Spotify API
+        run: |
+          echo "SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "REDIRECT_URI=${{ secrets.REDIRECT_URI }}" >> $GITHUB_ENV
+
       - name: Analyze code
         run: flutter analyze
 
