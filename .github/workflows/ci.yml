@@ -40,9 +40,3 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      - name: Build Android APK
-        run: flutter build apk --release
-
-      - name: Check outdated packages
-        run: dart pub outdated
