@@ -51,7 +51,6 @@ class SpotifyService {
 
       return tracks; // This is now a List<Track>, which is wrapped in a Future by the async function.
     } catch (e) {
-      print("Error fetching Spotify recommended tracks: $e");
       throw Exception('Failed to fetch Spotify recommended tracks: $e');
     }
   }
