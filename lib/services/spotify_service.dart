@@ -25,24 +25,22 @@ class SpotifyService {
 
   Future<List<Track>> getRecommendedTracks({bool isLimited = false}) async {
     String limit = isLimited ? "&limit=5" : "";
-    String baseUrl = 'https://api.spotify.com/v1/recommendations';
+    String baseUrl = 'https://api.spotify.com/v1/search';
     String? accessToken = await PreferencesService.getAccessToken();
 
-    final response = await http.get(
-      Uri.parse(
-          '$baseUrl?seed_genres=classical%2Ccountry&seed_tracks=0c6xIDDpzE81m2q797ordA&max_popularity=90$limit'),
-      headers: {
-        'Authorization': 'Bearer $accessToken',
-      },
-    );
+    try {
+      final response = await http.get(
+        Uri.parse(
+            '$baseUrl?q=remaster%2520track%3ADoxy%2520artist%3AMiles%2520Davis&type=track$limit'),
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
 
-    if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      // ignore: avoid_print
-      print("warr hore ${data['tracks']}");
-      final List<dynamic> tracklistsJson = data['tracks'];
+      final List<dynamic> tracklistsJson = data['tracks']['items'];
 
-      return tracklistsJson.map((trackJson) {
+      List<Track> tracks = tracklistsJson.map((trackJson) {
         return Track(
           name: trackJson['name'],
           trackuri: trackJson['uri'],
@@ -50,11 +48,11 @@ class SpotifyService {
           artistName: trackJson['artists'][0]['name'],
         );
       }).toList();
-    } else {
-      // ignore: avoid_print
-      print("aaaa ${response.body}");
-      throw Exception(
-          'Failed to fetch Spotify recommended: ${response.statusCode}');
+
+      return tracks; // This is now a List<Track>, which is wrapped in a Future by the async function.
+    } catch (e) {
+      print("Error fetching Spotify recommended tracks: $e");
+      throw Exception('Failed to fetch Spotify recommended tracks: $e');
     }
   }
 
